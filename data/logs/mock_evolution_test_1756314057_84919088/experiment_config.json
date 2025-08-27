@@ -1,0 +1,20 @@
+{
+  "experiment_name": "mock_evolution_test_1756314057_84919088",
+  "start_time": 1756314057.439213,
+  "config": {
+    "name": "mock_evolution_test",
+    "description": "Mock evolution test run",
+    "evolution": {
+      "population_size": 8,
+      "max_generations": 5,
+      "crossover_rate": 0.7,
+      "mutation_rate": 0.3,
+      "elite_size": 2,
+      "target_fitness": 0.8,
+      "convergence_patience": 3
+    },
+    "seed_strategy": "balanced",
+    "use_cache": false,
+    "max_problems": 10
+  }
+}

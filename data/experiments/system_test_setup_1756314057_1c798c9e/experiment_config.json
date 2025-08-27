@@ -1,0 +1,31 @@
+{
+  "experiment_id": "system_test_setup_1756314057_1c798c9e",
+  "experiment_name": "system_test_setup",
+  "description": "Fast test run for system validation",
+  "created_at": 1756314057.104516,
+  "status": "created",
+  "config": {
+    "population_size": 50,
+    "max_generations": 100,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.85,
+    "convergence_patience": 20,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "results_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/system_test_setup_1756314057_1c798c9e/results",
+  "logs_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/system_test_setup_1756314057_1c798c9e/logs",
+  "plots_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/system_test_setup_1756314057_1c798c9e/plots",
+  "total_generations": 0,
+  "best_fitness": 0.0,
+  "convergence_reason": "",
+  "total_time": 0.0,
+  "completed_at": null
+}

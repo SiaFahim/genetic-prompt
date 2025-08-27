@@ -1,0 +1,17 @@
+2025-08-27 19:00:57,657 - evolution_mock_evolution_test_1756314057_84919088 - INFO - 🧬 Starting evolution experiment: mock_evolution_test_1756314057_84919088
+2025-08-27 19:00:57,657 - evolution_mock_evolution_test_1756314057_84919088 - INFO - Configuration: {
+  "name": "mock_evolution_test",
+  "description": "Mock evolution test run",
+  "evolution": {
+    "population_size": 8,
+    "max_generations": 5,
+    "crossover_rate": 0.7,
+    "mutation_rate": 0.3,
+    "elite_size": 2,
+    "target_fitness": 0.8,
+    "convergence_patience": 3
+  },
+  "seed_strategy": "balanced",
+  "use_cache": false,
+  "max_problems": 10
+}

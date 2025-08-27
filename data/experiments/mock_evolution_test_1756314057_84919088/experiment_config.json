@@ -1,0 +1,31 @@
+{
+  "experiment_id": "mock_evolution_test_1756314057_84919088",
+  "experiment_name": "mock_evolution_test",
+  "description": "Mock evolution test run",
+  "created_at": 1756314057.435657,
+  "status": "created",
+  "config": {
+    "population_size": 8,
+    "max_generations": 5,
+    "crossover_rate": 0.7,
+    "mutation_rate": 0.3,
+    "elite_size": 2,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.8,
+    "convergence_patience": 3,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "results_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/mock_evolution_test_1756314057_84919088/results",
+  "logs_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/mock_evolution_test_1756314057_84919088/logs",
+  "plots_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/mock_evolution_test_1756314057_84919088/plots",
+  "total_generations": 0,
+  "best_fitness": 0.0,
+  "convergence_reason": "",
+  "total_time": 0.0,
+  "completed_at": null
+}
