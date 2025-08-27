@@ -1,0 +1,12 @@
+2025-08-26 23:17:22,729 - evolution_test_experiment - INFO - 🧬 Starting evolution experiment: test_experiment
+2025-08-26 23:17:22,730 - evolution_test_experiment - INFO - Configuration: {
+  "population_size": 50,
+  "max_generations": 100,
+  "mutation_rate": 0.2
+}
+2025-08-26 23:17:22,731 - evolution_test_experiment - INFO - Generation 1: best_fitness=0.500, mean_fitness=0.300, diversity=0.800
+2025-08-26 23:17:22,731 - evolution_test_experiment - INFO - Generation 2: best_fitness=0.600, mean_fitness=0.350, diversity=0.700
+2025-08-26 23:17:22,731 - evolution_test_experiment - INFO - Generation 3: best_fitness=0.700, mean_fitness=0.400, diversity=0.600
+2025-08-26 23:17:22,731 - evolution_test_experiment - INFO - Generation 4: best_fitness=0.800, mean_fitness=0.450, diversity=0.500
+2025-08-26 23:17:22,732 - evolution_test_experiment - INFO - Generation 5: best_fitness=0.900, mean_fitness=0.500, diversity=0.400
+2025-08-26 23:17:22,738 - evolution_test_experiment - INFO - 🏆 Experiment completed in 0.0s: best_fitness=0.850

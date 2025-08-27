@@ -1,0 +1,10 @@
+{
+  "experiment_name": "test_experiment",
+  "total_time": 0.008477926254272461,
+  "final_results": {
+    "best_fitness": 0.85,
+    "total_generations": 5,
+    "convergence_reason": "test_complete"
+  },
+  "end_time": 1756264642.738622
+}

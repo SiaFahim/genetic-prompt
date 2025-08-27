@@ -1,0 +1,11 @@
+{
+  "experiment_name": "integrated_monitoring_test_1756264974_e96a946c",
+  "total_time": 7.0086541175842285,
+  "final_results": {
+    "best_fitness": 0.85,
+    "total_generations": 5,
+    "convergence_reason": "target_reached",
+    "total_time": 150.0
+  },
+  "end_time": 1756264981.7673411
+}

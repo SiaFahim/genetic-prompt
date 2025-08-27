@@ -1,0 +1,6 @@
+{
+  "best_fitness": 0.85,
+  "total_generations": 25,
+  "convergence_reason": "target_reached",
+  "total_time": 120.5
+}

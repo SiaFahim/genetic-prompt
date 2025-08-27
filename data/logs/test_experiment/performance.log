@@ -1,0 +1,2 @@
+2025-08-26 23:17:22,732 - DEBUG - evaluation_time: 45.2 (batch_size_10)
+2025-08-26 23:17:22,732 - INFO - API Usage - Calls: 100, Tokens: 5000, Estimated Cost: $0.2500

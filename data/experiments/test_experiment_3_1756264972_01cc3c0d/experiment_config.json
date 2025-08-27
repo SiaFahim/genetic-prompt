@@ -1,0 +1,31 @@
+{
+  "experiment_id": "test_experiment_3_1756264972_01cc3c0d",
+  "experiment_name": "test_experiment_3",
+  "description": "Test experiment 3 for validation",
+  "created_at": 1756264972.364097,
+  "status": "created",
+  "config": {
+    "population_size": 40,
+    "max_generations": 100,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.9,
+    "convergence_patience": 20,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "results_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/test_experiment_3_1756264972_01cc3c0d/results",
+  "logs_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/test_experiment_3_1756264972_01cc3c0d/logs",
+  "plots_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/test_experiment_3_1756264972_01cc3c0d/plots",
+  "total_generations": 0,
+  "best_fitness": 0.0,
+  "convergence_reason": "",
+  "total_time": 0.0,
+  "completed_at": null
+}

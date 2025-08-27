@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": 1756264975.068375,
+    "metric": "cpu_usage",
+    "value": 0.0,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.068502,
+    "metric": "memory_usage",
+    "value": 335.94140625,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.171474,
+    "metric": "cpu_usage",
+    "value": 21.6,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.171571,
+    "metric": "memory_usage",
+    "value": 335.94921875,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.27675,
+    "metric": "cpu_usage",
+    "value": 11.4,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.2768378,
+    "metric": "memory_usage",
+    "value": 335.95703125,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.378588,
+    "metric": "cpu_usage",
+    "value": 11.8,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.3786838,
+    "metric": "memory_usage",
+    "value": 335.9609375,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.481301,
+    "metric": "cpu_usage",
+    "value": 19.0,
+    "context": null
+  },
+  {
+    "timestamp": 1756264975.481388,
+    "metric": "memory_usage",
+    "value": 335.9609375,
+    "context": null
+  }
+]

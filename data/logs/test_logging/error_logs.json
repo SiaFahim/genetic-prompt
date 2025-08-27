@@ -1,0 +1,8 @@
+[
+  {
+    "timestamp": 1756264964.389036,
+    "error_type": "RuntimeError",
+    "error_message": "Test error for logging validation",
+    "context": "test_error_context"
+  }
+]

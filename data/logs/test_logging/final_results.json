@@ -1,0 +1,10 @@
+{
+  "experiment_name": "test_logging",
+  "total_time": 0.0025479793548583984,
+  "final_results": {
+    "best_fitness": 0.82,
+    "total_generations": 15,
+    "convergence_reason": "fitness_plateau"
+  },
+  "end_time": 1756264964.389513
+}

@@ -1,0 +1,5 @@
+2025-08-26 23:22:44,388 - error_test_logging - ERROR - test_error_context - Error: Test error for logging validation - /Users/Odyssey/Projects/genetic-prompt/src/utils/evolution_logging.py:185
+Traceback (most recent call last):
+  File "/Users/Odyssey/Projects/genetic-prompt/scripts/test_monitoring_system.py", line 57, in test_logging_system
+    raise RuntimeError("Test error for logging validation")
+RuntimeError: Test error for logging validation

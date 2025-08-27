@@ -1,0 +1,6 @@
+2025-08-26 23:22:54,965 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - Generation 1: best_fitness=0.570, mean_fitness=0.420, diversity=0.700
+2025-08-26 23:22:55,068 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - Generation 2: best_fitness=0.640, mean_fitness=0.490, diversity=0.600
+2025-08-26 23:22:55,171 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - Generation 3: best_fitness=0.710, mean_fitness=0.560, diversity=0.500
+2025-08-26 23:22:55,276 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - Generation 4: best_fitness=0.780, mean_fitness=0.630, diversity=0.400
+2025-08-26 23:22:55,378 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - Generation 5: best_fitness=0.850, mean_fitness=0.700, diversity=0.300
+2025-08-26 23:23:01,766 - evolution_integrated_monitoring_test_1756264974_e96a946c - INFO - 🏆 Experiment completed in 7.0s: best_fitness=0.850

@@ -1,0 +1,47 @@
+[
+  {
+    "generation": 1,
+    "timestamp": 1756264964.387615,
+    "result": {
+      "best_fitness": 0.48000000000000004,
+      "mean_fitness": 0.26,
+      "diversity": 0.8
+    }
+  },
+  {
+    "generation": 2,
+    "timestamp": 1756264964.387715,
+    "result": {
+      "best_fitness": 0.56,
+      "mean_fitness": 0.32,
+      "diversity": 0.7
+    }
+  },
+  {
+    "generation": 3,
+    "timestamp": 1756264964.3878112,
+    "result": {
+      "best_fitness": 0.64,
+      "mean_fitness": 0.38,
+      "diversity": 0.6
+    }
+  },
+  {
+    "generation": 4,
+    "timestamp": 1756264964.387907,
+    "result": {
+      "best_fitness": 0.72,
+      "mean_fitness": 0.44,
+      "diversity": 0.5
+    }
+  },
+  {
+    "generation": 5,
+    "timestamp": 1756264964.387994,
+    "result": {
+      "best_fitness": 0.8,
+      "mean_fitness": 0.5,
+      "diversity": 0.4
+    }
+  }
+]

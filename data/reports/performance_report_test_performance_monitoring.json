@@ -1,0 +1,152 @@
+{
+  "experiment_id": "test_performance_monitoring",
+  "report_generated_at": 1756264974.7512891,
+  "monitoring_duration_minutes": 0.027949567635854086,
+  "summary": {
+    "experiment_id": "test_performance_monitoring",
+    "total_runtime_minutes": 0.024489800135294598,
+    "snapshots_taken": 8,
+    "cpu_usage": {
+      "current": 0.0,
+      "average": 21.212500000000002,
+      "peak": 44.7
+    },
+    "memory_usage": {
+      "current_mb": 328.19140625,
+      "average_mb": 328.19091796875,
+      "peak_mb": 328.19140625,
+      "growth_mb": 0.0078125
+    },
+    "api_usage": {
+      "total_calls": 8,
+      "total_tokens": 1064,
+      "current_rate_per_min": 8.0,
+      "tokens_per_call": 133.0
+    },
+    "cache_performance": {
+      "hit_rate": 0.5,
+      "total_hits": 4,
+      "total_misses": 4
+    },
+    "evaluation_performance": {
+      "average_time_seconds": 29.235793100982075,
+      "total_evaluations": 8
+    },
+    "disk_usage_mb": 0.0
+  },
+  "metrics_history": [
+    {
+      "timestamp": 1756264973.074761,
+      "cpu_percent": 22.3,
+      "memory_percent": 2.0030975341796875,
+      "memory_used_mb": 328.1875,
+      "api_calls_total": 1,
+      "api_calls_rate": 1.0,
+      "tokens_used_total": 78,
+      "tokens_rate": 78.0,
+      "evaluation_time_avg": 19.585239580447833,
+      "cache_hit_rate": 1.0,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264973.280454,
+      "cpu_percent": 13.1,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 2,
+      "api_calls_rate": 2.0,
+      "tokens_used_total": 236,
+      "tokens_rate": 236.0,
+      "evaluation_time_avg": 26.238755251203525,
+      "cache_hit_rate": 1.0,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264973.4877062,
+      "cpu_percent": 28.1,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 3,
+      "api_calls_rate": 3.0,
+      "tokens_used_total": 405,
+      "tokens_rate": 405.0,
+      "evaluation_time_avg": 27.783646951793724,
+      "cache_hit_rate": 0.6666666666666666,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264973.6940842,
+      "cpu_percent": 22.6,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 4,
+      "api_calls_rate": 4.0,
+      "tokens_used_total": 457,
+      "tokens_rate": 457.0,
+      "evaluation_time_avg": 29.68986079076918,
+      "cache_hit_rate": 0.75,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264973.901557,
+      "cpu_percent": 44.7,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 5,
+      "api_calls_rate": 5.0,
+      "tokens_used_total": 644,
+      "tokens_rate": 644.0,
+      "evaluation_time_avg": 31.257155430165,
+      "cache_hit_rate": 0.6,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264974.1068108,
+      "cpu_percent": 38.9,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 6,
+      "api_calls_rate": 6.0,
+      "tokens_used_total": 781,
+      "tokens_rate": 781.0,
+      "evaluation_time_avg": 29.10539039311688,
+      "cache_hit_rate": 0.6666666666666666,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264974.3379672,
+      "cpu_percent": 0.0,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 7,
+      "api_calls_rate": 7.0,
+      "tokens_used_total": 947,
+      "tokens_rate": 947.0,
+      "evaluation_time_avg": 27.104243120250455,
+      "cache_hit_rate": 0.5714285714285714,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    },
+    {
+      "timestamp": 1756264974.543704,
+      "cpu_percent": 0.0,
+      "memory_percent": 2.0031213760375977,
+      "memory_used_mb": 328.19140625,
+      "api_calls_total": 8,
+      "api_calls_rate": 8.0,
+      "tokens_used_total": 1064,
+      "tokens_rate": 1064.0,
+      "evaluation_time_avg": 29.235793100982075,
+      "cache_hit_rate": 0.5,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0
+    }
+  ],
+  "alerts_detected": []
+}

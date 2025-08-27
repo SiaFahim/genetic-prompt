@@ -1,0 +1,8 @@
+[
+  {
+    "timestamp": 1756264642.732258,
+    "metric": "evaluation_time",
+    "value": 45.2,
+    "context": "batch_size_10"
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "timestamp": 1756264642.738204,
+    "error_type": "ValueError",
+    "error_message": "Test error for logging",
+    "context": "test_context"
+  }
+]

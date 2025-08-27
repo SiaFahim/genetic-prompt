@@ -1,0 +1,13 @@
+2025-08-26 23:22:44,386 - evolution_test_logging - INFO - 🧬 Starting evolution experiment: test_logging
+2025-08-26 23:22:44,386 - evolution_test_logging - INFO - Configuration: {
+  "population_size": 30,
+  "max_generations": 50,
+  "mutation_rate": 0.25
+}
+2025-08-26 23:22:44,387 - evolution_test_logging - INFO - Generation 1: best_fitness=0.480, mean_fitness=0.260, diversity=0.800
+2025-08-26 23:22:44,387 - evolution_test_logging - INFO - Generation 2: best_fitness=0.560, mean_fitness=0.320, diversity=0.700
+2025-08-26 23:22:44,387 - evolution_test_logging - INFO - Generation 3: best_fitness=0.640, mean_fitness=0.380, diversity=0.600
+2025-08-26 23:22:44,387 - evolution_test_logging - INFO - Generation 4: best_fitness=0.720, mean_fitness=0.440, diversity=0.500
+2025-08-26 23:22:44,387 - evolution_test_logging - INFO - Generation 5: best_fitness=0.800, mean_fitness=0.500, diversity=0.400
+2025-08-26 23:22:44,389 - evolution_test_logging - INFO - 🎯 Convergence detected at generation 15: fitness_plateau (best_fitness=0.820)
+2025-08-26 23:22:44,389 - evolution_test_logging - INFO - 🏆 Experiment completed in 0.0s: best_fitness=0.820

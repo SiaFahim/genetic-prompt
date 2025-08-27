@@ -1,0 +1,9 @@
+{
+  "experiment_name": "test_experiment",
+  "start_time": 1756264642.729751,
+  "config": {
+    "population_size": 50,
+    "max_generations": 100,
+    "mutation_rate": 0.2
+  }
+}

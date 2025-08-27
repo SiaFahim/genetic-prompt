@@ -1,0 +1,8 @@
+[
+  {
+    "timestamp": 1756264964.388116,
+    "metric": "evaluation_time",
+    "value": 42.5,
+    "context": "population_30"
+  }
+]

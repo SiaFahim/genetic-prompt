@@ -88,6 +88,12 @@ class Config:
     def get_seeds_dir(self) -> Path:
         """Get seeds directory path."""
         return self.get_data_dir() / "seeds"
+
+    def get_logs_dir(self) -> Path:
+        """Get logs directory path."""
+        logs_dir = self.get_data_dir() / "logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        return logs_dir
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""

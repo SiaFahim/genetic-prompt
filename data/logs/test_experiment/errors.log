@@ -1,0 +1,5 @@
+2025-08-26 23:17:22,732 - error_test_experiment - ERROR - test_context - Error: Test error for logging - /Users/Odyssey/Projects/genetic-prompt/src/utils/evolution_logging.py:185
+Traceback (most recent call last):
+  File "/Users/Odyssey/Projects/genetic-prompt/src/utils/evolution_logging.py", line 335, in <module>
+    raise ValueError("Test error for logging")
+ValueError: Test error for logging

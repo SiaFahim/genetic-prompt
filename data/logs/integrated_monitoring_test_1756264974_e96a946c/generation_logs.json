@@ -1,0 +1,52 @@
+[
+  {
+    "generation": 1,
+    "timestamp": 1756264974.9661288,
+    "result": {
+      "best_fitness": 0.5700000000000001,
+      "mean_fitness": 0.42000000000000004,
+      "diversity": 0.7000000000000001,
+      "evaluation_time": 32.61522511906488
+    }
+  },
+  {
+    "generation": 2,
+    "timestamp": 1756264975.06865,
+    "result": {
+      "best_fitness": 0.64,
+      "mean_fitness": 0.49,
+      "diversity": 0.6000000000000001,
+      "evaluation_time": 29.476671871729494
+    }
+  },
+  {
+    "generation": 3,
+    "timestamp": 1756264975.171713,
+    "result": {
+      "best_fitness": 0.71,
+      "mean_fitness": 0.5599999999999999,
+      "diversity": 0.5,
+      "evaluation_time": 27.29258902824452
+    }
+  },
+  {
+    "generation": 4,
+    "timestamp": 1756264975.276972,
+    "result": {
+      "best_fitness": 0.78,
+      "mean_fitness": 0.63,
+      "diversity": 0.4,
+      "evaluation_time": 36.67939717945838
+    }
+  },
+  {
+    "generation": 5,
+    "timestamp": 1756264975.378813,
+    "result": {
+      "best_fitness": 0.8500000000000001,
+      "mean_fitness": 0.7000000000000001,
+      "diversity": 0.30000000000000004,
+      "evaluation_time": 33.98416876690344
+    }
+  }
+]

@@ -1,0 +1,110 @@
+{
+  "experiment_id": "integrated_monitoring_test_1756264974_e96a946c",
+  "report_generated_at": 1756264981.76999,
+  "monitoring_duration_minutes": 0.11340475082397461,
+  "summary": {
+    "experiment_id": "integrated_monitoring_test_1756264974_e96a946c",
+    "total_runtime_minutes": 0.006885333855946859,
+    "snapshots_taken": 5,
+    "cpu_usage": {
+      "current": 19.0,
+      "average": 12.760000000000002,
+      "peak": 21.6
+    },
+    "memory_usage": {
+      "current_mb": 335.9609375,
+      "average_mb": 335.95390625,
+      "peak_mb": 335.9609375,
+      "growth_mb": 0.0234375
+    },
+    "api_usage": {
+      "total_calls": 5,
+      "total_tokens": 626,
+      "current_rate_per_min": 5.0,
+      "tokens_per_call": 125.2
+    },
+    "cache_performance": {
+      "hit_rate": 0.4,
+      "total_hits": 2,
+      "total_misses": 3
+    },
+    "evaluation_performance": {
+      "average_time_seconds": 32.00961039308014,
+      "total_evaluations": 5
+    },
+    "disk_usage_mb": 0.0011196136474609375
+  },
+  "metrics_history": [
+    {
+      "timestamp": 1756264974.966152,
+      "cpu_percent": 0.0,
+      "memory_percent": 2.0504236221313477,
+      "memory_used_mb": 335.94140625,
+      "api_calls_total": 1,
+      "api_calls_rate": 1.0,
+      "tokens_used_total": 93,
+      "tokens_rate": 93.0,
+      "evaluation_time_avg": 32.61522511906488,
+      "cache_hit_rate": 0.0,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0011196136474609375
+    },
+    {
+      "timestamp": 1756264975.068664,
+      "cpu_percent": 21.6,
+      "memory_percent": 2.050471305847168,
+      "memory_used_mb": 335.94921875,
+      "api_calls_total": 2,
+      "api_calls_rate": 2.0,
+      "tokens_used_total": 237,
+      "tokens_rate": 237.0,
+      "evaluation_time_avg": 31.045948495397187,
+      "cache_hit_rate": 0.0,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0011196136474609375
+    },
+    {
+      "timestamp": 1756264975.171726,
+      "cpu_percent": 11.4,
+      "memory_percent": 2.0505189895629883,
+      "memory_used_mb": 335.95703125,
+      "api_calls_total": 3,
+      "api_calls_rate": 3.0,
+      "tokens_used_total": 337,
+      "tokens_rate": 337.0,
+      "evaluation_time_avg": 29.79482867301296,
+      "cache_hit_rate": 0.3333333333333333,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0011196136474609375
+    },
+    {
+      "timestamp": 1756264975.2769852,
+      "cpu_percent": 11.8,
+      "memory_percent": 2.0505428314208984,
+      "memory_used_mb": 335.9609375,
+      "api_calls_total": 4,
+      "api_calls_rate": 4.0,
+      "tokens_used_total": 484,
+      "tokens_rate": 484.0,
+      "evaluation_time_avg": 31.51597079962432,
+      "cache_hit_rate": 0.25,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0011196136474609375
+    },
+    {
+      "timestamp": 1756264975.378825,
+      "cpu_percent": 19.0,
+      "memory_percent": 2.0505428314208984,
+      "memory_used_mb": 335.9609375,
+      "api_calls_total": 5,
+      "api_calls_rate": 5.0,
+      "tokens_used_total": 626,
+      "tokens_rate": 626.0,
+      "evaluation_time_avg": 32.00961039308014,
+      "cache_hit_rate": 0.4,
+      "active_threads": 2,
+      "disk_usage_mb": 0.0011196136474609375
+    }
+  ],
+  "alerts_detected": []
+}

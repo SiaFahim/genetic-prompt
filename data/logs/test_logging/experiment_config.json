@@ -1,0 +1,9 @@
+{
+  "experiment_name": "test_logging",
+  "start_time": 1756264964.3866491,
+  "config": {
+    "population_size": 30,
+    "max_generations": 50,
+    "mutation_rate": 0.25
+  }
+}
