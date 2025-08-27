@@ -1,0 +1,20 @@
+{
+  "primary_eval": {
+    "size": 100,
+    "source": "test_set",
+    "seed": 42,
+    "description": "Primary evaluation set for fitness calculation during evolution"
+  },
+  "validation": {
+    "size": 100,
+    "source": "train_set",
+    "seed": 43,
+    "description": "Validation set to prevent overfitting"
+  },
+  "final_test": {
+    "size": 200,
+    "source": "test_set",
+    "seed": 44,
+    "description": "Final test set for comprehensive evaluation"
+  }
+}
