@@ -1,0 +1,118 @@
+{
+  "name": "test_validation_collection",
+  "description": "Test collection",
+  "created_at": 1756312951.4504,
+  "seed_count": 10,
+  "seeds": [
+    {
+      "id": "step_002",
+      "text": "First, let me identify what we know and what we need to find.",
+      "category": "step_by_step",
+      "description": "Information gathering first",
+      "expected_strength": "Organized problem setup",
+      "variations": [
+        "Let me start by listing what we know",
+        "First, I'll identify the given information"
+      ]
+    },
+    {
+      "id": "step_001",
+      "text": "Let's solve this step by step.",
+      "category": "step_by_step",
+      "description": "Classic step-by-step approach",
+      "expected_strength": "Clear sequential reasoning",
+      "variations": [
+        "Let's work through this step by step",
+        "I'll solve this systematically"
+      ]
+    },
+    {
+      "id": "parse_006",
+      "text": "Let me identify what we know, what we don't know, and what we need to find.",
+      "category": "word_problem_parsing",
+      "description": "Three-category information sorting",
+      "expected_strength": "Complete problem analysis",
+      "variations": [
+        "Known \u2192 Unknown \u2192 Target",
+        "Given \u2192 Missing \u2192 Goal"
+      ]
+    },
+    {
+      "id": "parse_003",
+      "text": "Let me translate this word problem into mathematical operations.",
+      "category": "word_problem_parsing",
+      "description": "Word-to-math translation",
+      "expected_strength": "Clear mathematical setup",
+      "variations": [
+        "Converting words to math",
+        "Translating to mathematical language"
+      ]
+    },
+    {
+      "id": "logic_002",
+      "text": "If this is true, then what follows? Let me trace the logical connections.",
+      "category": "logical_breakdown",
+      "description": "Conditional reasoning",
+      "expected_strength": "Handles complex conditions",
+      "variations": [
+        "Following the logical chain",
+        "If-then reasoning"
+      ]
+    },
+    {
+      "id": "logic_005",
+      "text": "What are the logical constraints and how do they guide the solution?",
+      "category": "logical_breakdown",
+      "description": "Constraint-based reasoning",
+      "expected_strength": "Handles complex constraints",
+      "variations": [
+        "Considering the constraints",
+        "What limits our options?"
+      ]
+    },
+    {
+      "id": "algebra_002",
+      "text": "I can solve this algebraically by representing the relationships mathematically.",
+      "category": "algebraic_approach",
+      "description": "Mathematical representation",
+      "expected_strength": "Complex relationship handling",
+      "variations": [
+        "Using algebraic methods",
+        "Mathematical representation works here"
+      ]
+    },
+    {
+      "id": "algebra_001",
+      "text": "Let me define variables and set up equations for this problem.",
+      "category": "algebraic_approach",
+      "description": "Variable definition approach",
+      "expected_strength": "Handles unknown quantities",
+      "variations": [
+        "I'll use variables here",
+        "Setting up with algebra"
+      ]
+    },
+    {
+      "id": "estimate_005",
+      "text": "I'll work backwards from my answer to verify it's correct.",
+      "category": "estimation_checking",
+      "description": "Backward verification",
+      "expected_strength": "Strong answer validation",
+      "variations": [
+        "Working backwards to check",
+        "Reverse verification"
+      ]
+    },
+    {
+      "id": "estimate_001",
+      "text": "Let me estimate the answer first, then calculate precisely.",
+      "category": "estimation_checking",
+      "description": "Estimate-first approach",
+      "expected_strength": "Error detection through estimation",
+      "variations": [
+        "I'll estimate before calculating",
+        "Starting with a rough estimate"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Complete Implementation Instructions for GSM8K Genetic Algorithm Project
 
 ## PROJECT OVERVIEW
-You will implement a genetic algorithm system that evolves optimal prompts for solving GSM8K math problems. The system will start with 50 seed prompts, evolve them through crossover and mutation operations across 500-member populations, and converge to prompts achieving 85% accuracy or better. Reference the `technical_implementation_specification.md` for exact specifications and `blueprint.md` for architectural patterns.
+You will implement a genetic algorithm system that evolves optimal prompts for solving GSM8K math problems. The system will start with 50 seed prompts, evolve them through crossover and mutation operations across 500-member populations, and converge to prompts achieving 95% accuracy or better. Reference the `technical_implementation_specification.md` for exact specifications and `blueprint.md` for architectural patterns.
 
 ## PHASE 1: ENVIRONMENT AND INFRASTRUCTURE SETUP
 

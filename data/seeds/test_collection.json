@@ -1,0 +1,118 @@
+{
+  "name": "test_collection",
+  "description": "Test collection for validation",
+  "created_at": 1756265452.414471,
+  "seed_count": 10,
+  "seeds": [
+    {
+      "id": "step_001",
+      "text": "Let's solve this step by step.",
+      "category": "step_by_step",
+      "description": "Classic step-by-step approach",
+      "expected_strength": "Clear sequential reasoning",
+      "variations": [
+        "Let's work through this step by step",
+        "I'll solve this systematically"
+      ]
+    },
+    {
+      "id": "step_004",
+      "text": "Let me work through this systematically, checking each step.",
+      "category": "step_by_step",
+      "description": "Systematic with verification",
+      "expected_strength": "Error reduction through checking",
+      "variations": [
+        "I'll solve this methodically",
+        "Working systematically through each part"
+      ]
+    },
+    {
+      "id": "parse_005",
+      "text": "I'll extract the numbers and relationships from this word problem.",
+      "category": "word_problem_parsing",
+      "description": "Data extraction focus",
+      "expected_strength": "Systematic information gathering",
+      "variations": [
+        "Finding all the numbers and connections",
+        "Extracting the mathematical relationships"
+      ]
+    },
+    {
+      "id": "parse_002",
+      "text": "I'll identify the key information and ignore any distractors.",
+      "category": "word_problem_parsing",
+      "description": "Information filtering",
+      "expected_strength": "Handles complex word problems",
+      "variations": [
+        "Finding the important information",
+        "Separating key facts from distractors"
+      ]
+    },
+    {
+      "id": "logic_004",
+      "text": "Let me reason through this systematically using logical principles.",
+      "category": "logical_breakdown",
+      "description": "Principled reasoning",
+      "expected_strength": "Systematic logical approach",
+      "variations": [
+        "Applying logical principles",
+        "Using systematic reasoning"
+      ]
+    },
+    {
+      "id": "logic_002",
+      "text": "If this is true, then what follows? Let me trace the logical connections.",
+      "category": "logical_breakdown",
+      "description": "Conditional reasoning",
+      "expected_strength": "Handles complex conditions",
+      "variations": [
+        "Following the logical chain",
+        "If-then reasoning"
+      ]
+    },
+    {
+      "id": "algebra_004",
+      "text": "I'll express the relationships as equations and solve systematically.",
+      "category": "algebraic_approach",
+      "description": "Relationship-based equations",
+      "expected_strength": "Multiple relationship handling",
+      "variations": [
+        "Converting relationships to equations",
+        "Systematic equation solving"
+      ]
+    },
+    {
+      "id": "algebra_001",
+      "text": "Let me define variables and set up equations for this problem.",
+      "category": "algebraic_approach",
+      "description": "Variable definition approach",
+      "expected_strength": "Handles unknown quantities",
+      "variations": [
+        "I'll use variables here",
+        "Setting up with algebra"
+      ]
+    },
+    {
+      "id": "estimate_003",
+      "text": "I'll solve this and then verify my answer using a different method.",
+      "category": "estimation_checking",
+      "description": "Multiple method verification",
+      "expected_strength": "High confidence solutions",
+      "variations": [
+        "Solving then double-checking",
+        "Verification with different approach"
+      ]
+    },
+    {
+      "id": "estimate_005",
+      "text": "I'll work backwards from my answer to verify it's correct.",
+      "category": "estimation_checking",
+      "description": "Backward verification",
+      "expected_strength": "Strong answer validation",
+      "variations": [
+        "Working backwards to check",
+        "Reverse verification"
+      ]
+    }
+  ]
+}
