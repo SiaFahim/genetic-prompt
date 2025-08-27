@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "experiment_name": "test_experiment",
+    "generation": 10,
+    "timestamp": 1756263725.433165,
+    "checkpoint_version": "1.0"
+  },
+  "population": {
+    "generation": 10,
+    "population_size": 5,
+    "genomes": [
+      {
+        "genome_id": "5050937b-7f6e-4f77-a6e7-b8fef790718f",
+        "token_ids": [
+          160,
+          3480,
+          6759,
+          1031,
+          4486,
+          5028,
+          921
+        ],
+        "fitness": 0.5,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "e794ffa8-cfdf-455c-bbd5-8aea41ee94e8",
+        "token_ids": [
+          7421,
+          147,
+          3644,
+          1265,
+          6133,
+          704,
+          3542,
+          556,
+          3719,
+          7715
+        ],
+        "fitness": 0.6,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "1cf9b474-79ec-4495-8e29-875f30437278",
+        "token_ids": [
+          4876,
+          4644,
+          1956,
+          3240,
+          7743,
+          9405,
+          6951,
+          7264,
+          2586
+        ],
+        "fitness": 0.7,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "92c3a065-0453-4ee2-ba8b-bebceb91d31a",
+        "token_ids": [
+          8555,
+          8027,
+          5866,
+          8116,
+          9433
+        ],
+        "fitness": 0.8,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "2f0c908e-909f-4c09-8b6b-bc64f707fb40",
+        "token_ids": [
+          4375,
+          134,
+          2601,
+          4856,
+          5584
+        ],
+        "fitness": 0.9,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      }
+    ]
+  },
+  "best_genome": {
+    "genome_id": "2f0c908e-909f-4c09-8b6b-bc64f707fb40",
+    "token_ids": [
+      4375,
+      134,
+      2601,
+      4856,
+      5584
+    ],
+    "fitness": 0.9,
+    "prompt_text": "intended also brianna yams hattie"
+  },
+  "generation_results": [
+    {
+      "generation": 10,
+      "best_fitness": 0.9,
+      "mean_fitness": 0.7,
+      "diversity": 0.7,
+      "evaluation_time": 30.0,
+      "evolution_time": 5.0,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0
+      }
+    }
+  ],
+  "evolution_config": {
+    "population_size": 50,
+    "max_generations": 100,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.85,
+    "convergence_patience": 20,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "additional_data": {}
+}

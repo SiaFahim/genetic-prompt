@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "experiment_name": "test_experiment",
+    "generation": 10,
+    "timestamp": 1756263692.6263921,
+    "checkpoint_version": "1.0"
+  },
+  "population": {
+    "generation": 10,
+    "population_size": 5,
+    "genomes": [
+      {
+        "genome_id": "a0c04abe-852a-4a0b-8828-fa51b05dd3bb",
+        "token_ids": [
+          7899,
+          4118,
+          8734,
+          445,
+          1874,
+          4534,
+          1158,
+          1623
+        ],
+        "fitness": 0.5,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "4ada69fe-cdef-49f8-92eb-72b77f48270d",
+        "token_ids": [
+          3182,
+          9144,
+          5186,
+          8086,
+          8652
+        ],
+        "fitness": 0.6,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "5dbaebff-58a0-4b86-9c10-4665c4373a4b",
+        "token_ids": [
+          5463,
+          5058,
+          6383,
+          7473,
+          833,
+          2968,
+          2885
+        ],
+        "fitness": 0.7,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "99128c5e-dd67-4967-9768-c9a53ee58b81",
+        "token_ids": [
+          7959,
+          3723,
+          2902,
+          9386,
+          691,
+          8567,
+          2528,
+          6957,
+          6527
+        ],
+        "fitness": 0.8,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "4978855c-083b-4e59-beb7-939a9a5bcce7",
+        "token_ids": [
+          9711,
+          1224,
+          3658,
+          4005,
+          3554,
+          2021,
+          4051
+        ],
+        "fitness": 0.9,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      }
+    ]
+  },
+  "best_genome": {
+    "genome_id": "4978855c-083b-4e59-beb7-939a9a5bcce7",
+    "token_ids": [
+      9711,
+      1224,
+      3658,
+      4005,
+      3554,
+      2021,
+      4051
+    ],
+    "fitness": 0.9,
+    "prompt_text": "equates baking eugene treatments helmets jared skipped"
+  },
+  "generation_results": [
+    {
+      "generation": 10,
+      "best_fitness": 0.9,
+      "mean_fitness": 0.7,
+      "diversity": 0.7,
+      "evaluation_time": 30.0,
+      "evolution_time": 5.0,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0
+      }
+    }
+  ],
+  "evolution_config": {
+    "population_size": 50,
+    "max_generations": 100,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": 

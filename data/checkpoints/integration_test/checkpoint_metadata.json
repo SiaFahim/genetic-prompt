@@ -1,0 +1,20 @@
+{
+  "experiment_name": "integration_test",
+  "created": 1756263781.023445,
+  "last_checkpoint": "checkpoint_gen_0005_1756263812.json",
+  "total_checkpoints": 2,
+  "checkpoint_history": [
+    {
+      "filename": "checkpoint_gen_0005_1756263781.json",
+      "generation": 5,
+      "timestamp": 1756263781.024191,
+      "best_fitness": 0.8
+    },
+    {
+      "filename": "checkpoint_gen_0005_1756263812.json",
+      "generation": 5,
+      "timestamp": 1756263812.912527,
+      "best_fitness": 0.8
+    }
+  ]
+}

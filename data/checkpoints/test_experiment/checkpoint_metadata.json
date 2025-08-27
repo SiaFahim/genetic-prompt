@@ -1,0 +1,14 @@
+{
+  "experiment_name": "test_experiment",
+  "created": 1756263725.432904,
+  "last_checkpoint": "checkpoint_gen_0010_1756263725.json",
+  "total_checkpoints": 1,
+  "checkpoint_history": [
+    {
+      "filename": "checkpoint_gen_0010_1756263725.json",
+      "generation": 10,
+      "timestamp": 1756263725.433165,
+      "best_fitness": 0.9
+    }
+  ]
+}

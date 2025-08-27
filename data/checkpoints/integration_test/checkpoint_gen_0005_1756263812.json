@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "experiment_name": "integration_test",
+    "generation": 5,
+    "timestamp": 1756263812.912527,
+    "checkpoint_version": "1.0"
+  },
+  "population": {
+    "generation": 5,
+    "population_size": 3,
+    "genomes": [
+      {
+        "genome_id": "272167b0-4de0-49b7-8b9f-e59f0d473c2c",
+        "token_ids": [
+          3566,
+          958,
+          9489,
+          8883,
+          998,
+          5138,
+          936
+        ],
+        "fitness": 0.6,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "bcc16b91-9bef-4d67-a895-44d0a588038c",
+        "token_ids": [
+          9571,
+          7811,
+          8238,
+          8701,
+          2579
+        ],
+        "fitness": 0.7,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "bffc0944-4fc0-4604-9cd5-a85558a7f7a2",
+        "token_ids": [
+          8320,
+          1312,
+          3044,
+          1122,
+          9749
+        ],
+        "fitness": 0.8,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      }
+    ]
+  },
+  "best_genome": {
+    "genome_id": "bffc0944-4fc0-4604-9cd5-a85558a7f7a2",
+    "token_ids": [
+      8320,
+      1312,
+      3044,
+      1122,
+      9749
+    ],
+    "fitness": 0.8,
+    "prompt_text": "josue training usual kim bruises"
+  },
+  "generation_results": [],
+  "evolution_config": {
+    "population_size": 3,
+    "max_generations": 10,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.85,
+    "convergence_patience": 20,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "additional_data": {}
+}

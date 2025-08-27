@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "experiment_name": "integration_test",
+    "generation": 5,
+    "timestamp": 1756263781.024191,
+    "checkpoint_version": "1.0"
+  },
+  "population": {
+    "generation": 5,
+    "population_size": 3,
+    "genomes": [
+      {
+        "genome_id": "f6138b72-14f9-46bd-8b79-8b1c439054d7",
+        "token_ids": [
+          887,
+          1612,
+          993,
+          6596,
+          5559,
+          1790,
+          4073,
+          3139
+        ],
+        "fitness": 0.6,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "05dcaa84-8ba3-4493-b6ba-e9baf8157a81",
+        "token_ids": [
+          8786,
+          7350,
+          2296,
+          6912,
+          3006,
+          4563
+        ],
+        "fitness": 0.7,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      },
+      {
+        "genome_id": "163be3e5-dc11-44d0-b3bb-7514e629f759",
+        "token_ids": [
+          4092,
+          1235,
+          7260,
+          9016,
+          1604,
+          828,
+          8856,
+          241
+        ],
+        "fitness": 0.8,
+        "generation": 0,
+        "age": 0,
+        "evaluation_count": 1,
+        "parent_ids": [],
+        "mutation_history": []
+      }
+    ]
+  },
+  "best_genome": {
+    "genome_id": "163be3e5-dc11-44d0-b3bb-7514e629f759",
+    "token_ids": [
+      4092,
+      1235,
+      7260,
+      9016,
+      1604,
+      828,
+      8856,
+      241
+    ],
+    "fitness": 0.8,
+    "prompt_text": "grill sue krissa recommends fishing combining skating calories"
+  },
+  "generation_results": [],
+  "evolution_config": {
+    "population_size": 3,
+    "max_generations": 10,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.85,
+    "convergence_patience": 20,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 10
+  },
+  "additional_data": {}
+}
