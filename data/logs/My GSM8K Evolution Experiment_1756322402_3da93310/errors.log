@@ -1,0 +1,26 @@
+2025-08-27 23:22:00,369 - error_My GSM8K Evolution Experiment_1756322402_3da93310 - ERROR - experiment_execution - Error: Object of type SelectionMethod is not JSON serializable - /Users/Odyssey/Projects/genetic-prompt/src/utils/evolution_logging.py:185
+Traceback (most recent call last):
+  File "/Users/Odyssey/Projects/genetic-prompt/src/main_runner.py", line 167, in run_experiment
+    self.final_results = self.evolution_controller.run_evolution()
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/Odyssey/Projects/genetic-prompt/src/genetics/evolution.py", line 279, in run_evolution
+    self._save_checkpoint(result.generation)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/Odyssey/Projects/genetic-prompt/src/genetics/evolution.py", line 334, in _save_checkpoint
+    json.dump(checkpoint_data, f, indent=2)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+  File "/usr/local/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type SelectionMethod is not JSON serializable

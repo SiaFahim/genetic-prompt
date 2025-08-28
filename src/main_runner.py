@@ -83,7 +83,43 @@ class GSM8KExperimentRunner:
             
             # Create experiment
             print("🧪 Creating experiment...")
-            evolution_config = EvolutionConfig(**self.config.get('evolution', {}))
+
+            # Extract evolution parameters from config
+            # Handle both nested 'evolution' key and direct parameters
+            if 'evolution' in self.config:
+                # Nested format (from direct API usage)
+                evolution_params = self.config['evolution']
+            else:
+                # Direct format (from experiment configuration system)
+                evolution_params = {
+                    'population_size': self.config.get('population_size', 50),
+                    'max_generations': self.config.get('max_generations', 100),
+                    'crossover_rate': self.config.get('crossover_rate', 0.8),
+                    'mutation_rate': self.config.get('mutation_rate', 0.2),
+                    'elite_size': self.config.get('elite_size', 5),
+                    'selection_method': self.config.get('selection_method', 'tournament'),
+                    'tournament_size': self.config.get('tournament_size', 3),
+                    'crossover_type': self.config.get('crossover_type', 'single_point'),
+                    'mutation_type': self.config.get('mutation_type', 'semantic'),
+                    'target_fitness': self.config.get('target_fitness', 0.85),
+                    'convergence_patience': self.config.get('convergence_patience', 20),
+                    'adaptive_parameters': self.config.get('adaptive_parameters', True),
+                    'save_checkpoints': self.config.get('save_checkpoints', True),
+                    'checkpoint_interval': self.config.get('checkpoint_interval', 10)
+                }
+
+            # Convert string enum values to enum objects if needed
+            if isinstance(evolution_params.get('selection_method'), str):
+                from src.genetics.selection import SelectionMethod
+                evolution_params['selection_method'] = SelectionMethod(evolution_params['selection_method'])
+            if isinstance(evolution_params.get('crossover_type'), str):
+                from src.genetics.crossover import CrossoverType
+                evolution_params['crossover_type'] = CrossoverType(evolution_params['crossover_type'])
+            if isinstance(evolution_params.get('mutation_type'), str):
+                from src.genetics.mutation import MutationType
+                evolution_params['mutation_type'] = MutationType(evolution_params['mutation_type'])
+
+            evolution_config = EvolutionConfig(**evolution_params)
             
             self.experiment_id = self.experiment_manager.create_experiment(
                 experiment_name=self.config.get('name', 'gsm8k_evolution'),

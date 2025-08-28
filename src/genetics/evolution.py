@@ -8,6 +8,7 @@ import random
 from typing import Dict, List, Any, Optional, Callable
 from dataclasses import dataclass, asdict
 from pathlib import Path
+from enum import Enum
 
 # Handle imports for both module and standalone execution
 if __name__ == "__main__":
@@ -33,6 +34,40 @@ else:
     from ..evaluation.pipeline import EvaluationPipeline
     from ..utils.config import config
     from ..utils.dataset import gsm8k_dataset
+
+
+def _dataclass_to_json_dict(obj):
+    """Convert dataclass to JSON-serializable dictionary, handling enums."""
+    if hasattr(obj, '__dataclass_fields__'):
+        # It's a dataclass - get the actual field values, not asdict() result
+        result = {}
+        for field_name in obj.__dataclass_fields__:
+            field_value = getattr(obj, field_name)
+            result[field_name] = _convert_value_to_json(field_value)
+        return result
+    else:
+        return _convert_value_to_json(obj)
+
+
+def _convert_value_to_json(value):
+    """Convert a value to JSON-serializable format."""
+    if isinstance(value, Enum):
+        return value.value
+    elif hasattr(value, '__dataclass_fields__'):
+        # Nested dataclass
+        return _dataclass_to_json_dict(value)
+    elif isinstance(value, list):
+        # Handle lists that might contain dataclasses or enums
+        return [_convert_value_to_json(item) for item in value]
+    elif isinstance(value, dict):
+        # Handle dictionaries that might contain dataclasses or enums
+        return {k: _convert_value_to_json(v) for k, v in value.items()}
+    elif isinstance(value, tuple):
+        # Handle tuples
+        return tuple(_convert_value_to_json(item) for item in value)
+    else:
+        # Basic types (int, float, str, bool, None)
+        return value
 
 
 @dataclass
@@ -326,14 +361,41 @@ class EvolutionController:
                 'token_ids': self.best_genome_ever.token_ids,
                 'fitness': self.best_fitness_ever
             } if self.best_genome_ever else None,
-            'config': asdict(self.config),
-            'generation_results': [asdict(r) for r in self.generation_results]
+            'config': _dataclass_to_json_dict(self.config),
+            'generation_results': [_dataclass_to_json_dict(r) for r in self.generation_results]
         }
         
         with open(checkpoint_file, 'w') as f:
             json.dump(checkpoint_data, f, indent=2)
         
         print(f"💾 Checkpoint saved: {checkpoint_file}")
+
+    def _load_checkpoint(self, checkpoint_file: Path) -> Dict[str, Any]:
+        """Load evolution checkpoint and convert enum strings back to enums."""
+        with open(checkpoint_file, 'r') as f:
+            checkpoint_data = json.load(f)
+
+        # Convert enum strings back to enum objects in config
+        if 'config' in checkpoint_data:
+            config_data = checkpoint_data['config']
+            if 'selection_method' in config_data:
+                config_data['selection_method'] = SelectionMethod(config_data['selection_method'])
+            if 'crossover_type' in config_data:
+                config_data['crossover_type'] = CrossoverType(config_data['crossover_type'])
+            if 'mutation_type' in config_data:
+                config_data['mutation_type'] = MutationType(config_data['mutation_type'])
+
+        # Convert enum strings back to enum objects in generation results
+        if 'generation_results' in checkpoint_data:
+            for result in checkpoint_data['generation_results']:
+                if 'convergence_status' in result and result['convergence_status']:
+                    conv_status = result['convergence_status']
+                    if 'reason' in conv_status:
+                        # Import ConvergenceReason to convert back
+                        from .convergence import ConvergenceReason
+                        conv_status['reason'] = ConvergenceReason(conv_status['reason'])
+
+        return checkpoint_data
 
 
 if __name__ == "__main__":
