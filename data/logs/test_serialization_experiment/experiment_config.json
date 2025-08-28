@@ -1,0 +1,21 @@
+{
+  "experiment_name": "test_serialization_experiment",
+  "start_time": 1756384234.819916,
+  "config": {
+    "name": "Test Experiment",
+    "population_size": 15,
+    "convergence_reason": "target_fitness",
+    "nested_data": {
+      "status": {
+        "converged": true,
+        "reason": "diversity_loss",
+        "confidence": 0.8,
+        "generations_since_improvement": 5,
+        "current_best_fitness": 0.9,
+        "diversity_score": 0.1,
+        "plateau_length": 0,
+        "details": {}
+      }
+    }
+  }
+}

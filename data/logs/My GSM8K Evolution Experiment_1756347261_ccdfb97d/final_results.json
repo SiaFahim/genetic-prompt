@@ -1,0 +1,19 @@
+{
+  "experiment_name": "My GSM8K Evolution Experiment_1756347261_ccdfb97d",
+  "total_time": 9802.552113056183,
+  "final_results": {
+    "best_fitness": 0.5834965185619424,
+    "best_genome": "cousin this yet true then what follows do they <UNK> the solution",
+    "total_generations": 14,
+    "total_time": 9756.440701961517,
+    "total_evaluations": 210,
+    "convergence_reason": "stagnation",
+    "generation_results": [
+      {
+        "generation": 1,
+        "best_fitness": -Infinity,
+        "mean_fitness": 0.40978192278127673,
+        "diversity": 0.9062362637362638,
+        "convergence_status": {
+          "converged": false,
+          "reason": 

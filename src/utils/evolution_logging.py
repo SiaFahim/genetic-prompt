@@ -9,6 +9,7 @@ from typing import Dict, Any, Optional
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
+from enum import Enum
 
 # Handle imports for both module and standalone execution
 if __name__ == "__main__":
@@ -18,6 +19,26 @@ if __name__ == "__main__":
     from src.utils.config import config
 else:
     from .config import config
+
+
+def _convert_to_json_serializable(obj):
+    """Convert objects to JSON-serializable format, handling enums and dataclasses."""
+    if isinstance(obj, Enum):
+        return obj.value
+    elif hasattr(obj, '__dataclass_fields__'):
+        # It's a dataclass
+        result = {}
+        for field_name in obj.__dataclass_fields__:
+            field_value = getattr(obj, field_name)
+            result[field_name] = _convert_to_json_serializable(field_value)
+        return result
+    elif isinstance(obj, dict):
+        return {k: _convert_to_json_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [_convert_to_json_serializable(item) for item in obj]
+    else:
+        # Basic types (int, float, str, bool, None)
+        return obj
 
 
 class EvolutionLogger:
@@ -113,15 +134,18 @@ class EvolutionLogger:
     def log_experiment_start(self, config: Dict[str, Any]):
         """Log experiment start with configuration."""
         self.evolution_logger.info(f"🧬 Starting evolution experiment: {self.experiment_name}")
-        self.evolution_logger.info(f"Configuration: {json.dumps(config, indent=2)}")
-        
+
+        # Convert config to JSON-serializable format for logging
+        serializable_config = _convert_to_json_serializable(config)
+        self.evolution_logger.info(f"Configuration: {json.dumps(serializable_config, indent=2)}")
+
         # Save configuration to file
         config_file = self.experiment_logs_dir / "experiment_config.json"
         with open(config_file, 'w') as f:
             json.dump({
                 'experiment_name': self.experiment_name,
                 'start_time': self.experiment_start_time,
-                'config': config
+                'config': serializable_config
             }, f, indent=2)
     
     def log_generation(self, generation: int, result: Dict[str, Any]):
@@ -227,15 +251,16 @@ class EvolutionLogger:
             f"best_fitness={final_results.get('best_fitness', 0):.3f}"
         )
         
-        # Save final results
+        # Save final results (convert to JSON-serializable format)
         results_file = self.experiment_logs_dir / "final_results.json"
         with open(results_file, 'w') as f:
-            json.dump({
+            serializable_data = {
                 'experiment_name': self.experiment_name,
                 'total_time': total_time,
-                'final_results': final_results,
+                'final_results': _convert_to_json_serializable(final_results),
                 'end_time': time.time()
-            }, f, indent=2)
+            }
+            json.dump(serializable_data, f, indent=2)
         
         # Save all logs
         self._save_all_logs()
@@ -244,7 +269,8 @@ class EvolutionLogger:
         """Save generation logs to file."""
         logs_file = self.experiment_logs_dir / "generation_logs.json"
         with open(logs_file, 'w') as f:
-            json.dump(self.generation_logs, f, indent=2)
+            serializable_logs = _convert_to_json_serializable(self.generation_logs)
+            json.dump(serializable_logs, f, indent=2)
     
     def _save_all_logs(self):
         """Save all accumulated logs."""
@@ -254,12 +280,14 @@ class EvolutionLogger:
         # Save performance logs
         perf_file = self.experiment_logs_dir / "performance_logs.json"
         with open(perf_file, 'w') as f:
-            json.dump(self.performance_logs, f, indent=2)
-        
+            serializable_perf_logs = _convert_to_json_serializable(self.performance_logs)
+            json.dump(serializable_perf_logs, f, indent=2)
+
         # Save error logs
         error_file = self.experiment_logs_dir / "error_logs.json"
         with open(error_file, 'w') as f:
-            json.dump(self.error_logs, f, indent=2)
+            serializable_error_logs = _convert_to_json_serializable(self.error_logs)
+            json.dump(serializable_error_logs, f, indent=2)
     
     def get_log_summary(self) -> Dict[str, Any]:
         """Get summary of logged information."""

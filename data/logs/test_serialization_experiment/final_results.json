@@ -1,0 +1,19 @@
+{
+  "experiment_name": "test_serialization_experiment",
+  "total_time": 0.0008788108825683594,
+  "final_results": {
+    "best_fitness": 0.85,
+    "convergence_reason": "stagnation",
+    "final_status": {
+      "converged": true,
+      "reason": "stagnation",
+      "confidence": 1.0,
+      "generations_since_improvement": 15,
+      "current_best_fitness": 0.85,
+      "diversity_score": 0.3,
+      "plateau_length": 15,
+      "details": {}
+    }
+  },
+  "end_time": 1756384234.821121
+}

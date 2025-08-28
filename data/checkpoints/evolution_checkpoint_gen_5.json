@@ -1,0 +1,502 @@
+{
+  "generation": 5,
+  "population": [
+    {
+      "genome_id": "0d9ecc57-7b46-426d-b49f-6f96418ba9b1",
+      "token_ids": [
+        7769,
+        79,
+        315,
+        89,
+        160,
+        124,
+        31,
+        89,
+        160,
+        124,
+        93,
+        12,
+        160,
+        124,
+        87,
+        28
+      ],
+      "fitness": null,
+      "generation": 0
+    },
+    {
+      "genome_id": "1be170df-dd19-45d0-bf9c-3db995282fa9",
+      "token_ids": [
+        9403,
+        4,
+        1194,
+        7,
+        0,
+        45,
+        79,
+        3744,
+        1791
+      ],
+      "fitness": null,
+      "generation": 0
+    },
+    {
+      "genome_id": "47aecc81-62fc-4f90-898a-615538e4e7cb",
+      "token_ids": [
+        231,
+        5695,
+        7346,
+        79,
+        3744,
+        1791,
+        152,
+        0,
+        5541
+      ],
+      "fitness": null,
+      "generation": 0
+    },
+    {
+      "genome_id": "57e88be9-4a19-407c-ba51-a70c806e1210",
+      "token_ids": [
+        89,
+        19,
+        4,
+        0,
+        0,
+        7,
+        12,
+        160,
+        37,
+        0,
+        4,
+        4686
+      ],
+      "fitness": null,
+      "generation": 0
+    },
+    {
+      "genome_id": "6b270471-4176-4659-a9fc-4486e3028afc",
+      "token_ids": [
+        20,
+        79,
+        9,
+        9718,
+        34,
+        89,
+        4666,
+        231,
+        5695,
+        7036,
+        4,
+        0,
+        0
+      ],
+      "fitness": null,
+      "generation": 0
+    },
+    {
+      "genome_id": "1d37974a-04be-460b-b0b2-037b674b38a7",
+      "token_ids": [
+        3749,
+        19,
+        3439,
+        5308,
+        34,
+        89,
+        4666,
+        5850,
+        40
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "d308b56f-f080-4bcc-b5ee-28ed96aea908",
+      "token_ids": [
+        20,
+        79,
+        9,
+        9718,
+        3744,
+        1791,
+        152,
+        0,
+        5541
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "d3927064-89a4-4d93-ad35-a2e13650dad2",
+      "token_ids": [
+        231,
+        5695,
+        7346,
+        79,
+        34,
+        89,
+        4666,
+        0,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "660a0943-5285-48ed-9208-3cc583657861",
+      "token_ids": [
+        28,
+        19,
+        3439,
+        5308,
+        34,
+        89,
+        4666,
+        0,
+        40
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "ac686afc-b5de-40c4-b6b1-c9fc3eee64f0",
+      "token_ids": [
+        20,
+        79,
+        9,
+        9718,
+        34,
+        89,
+        4666,
+        0,
+        40
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "d2b54b2a-e249-49e6-8fc5-f821dec16ea5",
+      "token_ids": [
+        1771,
+        79,
+        3233,
+        9718,
+        34,
+        89,
+        4666,
+        231,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "d2118deb-60fa-4b4b-bb4c-ba72cc95eef8",
+      "token_ids": [
+        1771,
+        79,
+        3233,
+        9718,
+        34,
+        89,
+        4666,
+        231,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "51ab57b9-f187-4c24-8a80-37edf5018989",
+      "token_ids": [
+        1771,
+        79,
+        3233,
+        733,
+        34,
+        89,
+        4666,
+        231,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "02af92d6-9f92-4e9d-8ec1-5becdc8ba553",
+      "token_ids": [
+        1771,
+        79,
+        3233,
+        9718,
+        34,
+        89,
+        4666,
+        231,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    },
+    {
+      "genome_id": "af03f575-7f44-4702-aef8-d158cdfad879",
+      "token_ids": [
+        20,
+        79,
+        9,
+        9718,
+        34,
+        89,
+        4666,
+        231,
+        0
+      ],
+      "fitness": null,
+      "generation": 5
+    }
+  ],
+  "best_genome_ever": {
+    "genome_id": "c1c1bf80-0ff3-443d-beb1-a4ae5056924a",
+    "token_ids": [
+      20,
+      79,
+      9,
+      9718,
+      34,
+      89,
+      4666,
+      0,
+      0
+    ],
+    "fitness": 0.559997224500195
+  },
+  "config": {
+    "population_size": 15,
+    "max_generations": 20,
+    "crossover_rate": 0.8,
+    "mutation_rate": 0.2,
+    "elite_size": 5,
+    "selection_method": "tournament",
+    "tournament_size": 3,
+    "crossover_type": "single_point",
+    "mutation_type": "semantic",
+    "target_fitness": 0.95,
+    "convergence_patience": 5,
+    "adaptive_parameters": true,
+    "save_checkpoints": true,
+    "checkpoint_interval": 5
+  },
+  "generation_results": [
+    {
+      "generation": 1,
+      "best_fitness": -Infinity,
+      "mean_fitness": 0.40978192278127673,
+      "diversity": 0.9062362637362638,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0,
+        "generations_since_improvement": 0,
+        "current_best_fitness": 0.5312133837064407,
+        "diversity_score": 0.9062362637362638,
+        "plateau_length": 0,
+        "details": {}
+      },
+      "evaluation_time": 1172.77250790596,
+      "evolution_time": 1172.8002529144287,
+      "population_stats": {
+        "generation": 0,
+        "population_size": 15,
+        "diversity": 0.9062362637362638,
+        "best_fitness": -Infinity,
+        "fitness_stats": {
+          "count": 15,
+          "mean": 0.40978192278127673,
+          "median": 0.43465235023334653,
+          "std": 0.09614649241579795,
+          "min": 0.23697917569769708,
+          "max": 0.5312133837064407,
+          "range": 0.29423420800874356
+        },
+        "length_stats": {
+          "mean_length": 10.266666666666667,
+          "min_length": 7,
+          "max_length": 16
+        },
+        "age_stats": {
+          "mean_age": 0,
+          "max_age": 0
+        }
+      }
+    },
+    {
+      "generation": 2,
+      "best_fitness": -Infinity,
+      "mean_fitness": 0.44403952519151135,
+      "diversity": 0.8009676434676435,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0,
+        "generations_since_improvement": 1,
+        "current_best_fitness": 0.5136543378849109,
+        "diversity_score": 0.8009676434676435,
+        "plateau_length": 1,
+        "details": {}
+      },
+      "evaluation_time": 968.0805768966675,
+      "evolution_time": 968.0902509689331,
+      "population_stats": {
+        "generation": 1,
+        "population_size": 15,
+        "diversity": 0.8009676434676435,
+        "best_fitness": -Infinity,
+        "fitness_stats": {
+          "count": 15,
+          "mean": 0.44403952519151135,
+          "median": 0.4857142617358263,
+          "std": 0.09163636751007911,
+          "min": 0.16149595842494788,
+          "max": 0.5136543378849109,
+          "range": 0.352158379459963
+        },
+        "length_stats": {
+          "mean_length": 10.466666666666667,
+          "min_length": 9,
+          "max_length": 16
+        },
+        "age_stats": {
+          "mean_age": 0.3333333333333333,
+          "max_age": 1
+        }
+      }
+    },
+    {
+      "generation": 3,
+      "best_fitness": -Infinity,
+      "mean_fitness": 0.39182167019755293,
+      "diversity": 0.7907356532356532,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0,
+        "generations_since_improvement": 2,
+        "current_best_fitness": 0.45002069093699365,
+        "diversity_score": 0.7907356532356532,
+        "plateau_length": 2,
+        "details": {}
+      },
+      "evaluation_time": 940.1025748252869,
+      "evolution_time": 940.1096909046173,
+      "population_stats": {
+        "generation": 2,
+        "population_size": 15,
+        "diversity": 0.7907356532356532,
+        "best_fitness": -Infinity,
+        "fitness_stats": {
+          "count": 15,
+          "mean": 0.39182167019755293,
+          "median": 0.41745492790681804,
+          "std": 0.0676732622434953,
+          "min": 0.21180705190314453,
+          "max": 0.45002069093699365,
+          "range": 0.23821363903384912
+        },
+        "length_stats": {
+          "mean_length": 10.466666666666667,
+          "min_length": 9,
+          "max_length": 16
+        },
+        "age_stats": {
+          "mean_age": 0.6666666666666666,
+          "max_age": 2
+        }
+      }
+    },
+    {
+      "generation": 4,
+      "best_fitness": -Infinity,
+      "mean_fitness": 0.47355412003474073,
+      "diversity": 0.7428317053317053,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0,
+        "generations_since_improvement": 0,
+        "current_best_fitness": 0.559997224500195,
+        "diversity_score": 0.7428317053317053,
+        "plateau_length": 0,
+        "details": {}
+      },
+      "evaluation_time": 733.9677450656891,
+      "evolution_time": 733.9744880199432,
+      "population_stats": {
+        "generation": 3,
+        "population_size": 15,
+        "diversity": 0.7428317053317053,
+        "best_fitness": -Infinity,
+        "fitness_stats": {
+          "count": 15,
+          "mean": 0.47355412003474073,
+          "median": 0.5090624130396078,
+          "std": 0.12246071228124614,
+          "min": 0.08889930317832534,
+          "max": 0.559997224500195,
+          "range": 0.4710979213218696
+        },
+        "length_stats": {
+          "mean_length": 9.933333333333334,
+          "min_length": 9,
+          "max_length": 16
+        },
+        "age_stats": {
+          "mean_age": 1.1333333333333333,
+          "max_age": 3
+        }
+      }
+    },
+    {
+      "generation": 5,
+      "best_fitness": -Infinity,
+      "mean_fitness": 0.3462136324385172,
+      "diversity": 0.6815628815628816,
+      "convergence_status": {
+        "converged": false,
+        "reason": "not_converged",
+        "confidence": 0.0,
+        "generations_since_improvement": 1,
+        "current_best_fitness": 0.3855555447795647,
+        "diversity_score": 0.6815628815628816,
+        "plateau_length": 4,
+        "details": {}
+      },
+      "evaluation_time": 698.7685940265656,
+      "evolution_time": 698.7755780220032,
+      "population_stats": {
+        "generation": 4,
+        "population_size": 15,
+        "diversity": 0.6815628815628816,
+        "best_fitness": -Infinity,
+        "fitness_stats": {
+          "count": 15,
+          "mean": 0.3462136324385172,
+          "median": 0.3653124197464898,
+          "std": 0.05522230839498582,
+          "min": 0.19854878242507298,
+          "max": 0.3855555447795647,
+          "range": 0.18700676235449173
+        },
+        "length_stats": {
+          "mean_length": 10.2,
+          "min_length": 9,
+          "max_length": 16
+        },
+        "age_stats": {
+          "mean_age": 1.3333333333333333,
+          "max_age": 4
+        }
+      }
+    }
+  ]
+}

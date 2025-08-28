@@ -9,6 +9,7 @@ from typing import Dict, List, Any, Optional
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass, asdict
+from enum import Enum
 
 # Handle imports for both module and standalone execution
 if __name__ == "__main__":
@@ -24,6 +25,26 @@ else:
     from .evolution_logging import EvolutionLogger
     from .visualization import EvolutionVisualizer
     from ..genetics.evolution import EvolutionConfig
+
+
+def _convert_to_json_serializable(obj):
+    """Convert objects to JSON-serializable format, handling enums and dataclasses."""
+    if isinstance(obj, Enum):
+        return obj.value
+    elif hasattr(obj, '__dataclass_fields__'):
+        # It's a dataclass
+        result = {}
+        for field_name in obj.__dataclass_fields__:
+            field_value = getattr(obj, field_name)
+            result[field_name] = _convert_to_json_serializable(field_value)
+        return result
+    elif isinstance(obj, dict):
+        return {k: _convert_to_json_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [_convert_to_json_serializable(item) for item in obj]
+    else:
+        # Basic types (int, float, str, bool, None)
+        return obj
 
 
 @dataclass
@@ -115,7 +136,8 @@ class ExperimentManager:
         # Save experiment config
         config_file = exp_dir / "experiment_config.json"
         with open(config_file, 'w') as f:
-            json.dump(asdict(metadata), f, indent=2)
+            serializable_metadata = _convert_to_json_serializable(asdict(metadata))
+            json.dump(serializable_metadata, f, indent=2)
         
         print(f"📋 Created experiment: {experiment_id}")
         return experiment_id
@@ -168,7 +190,8 @@ class ExperimentManager:
         # Save final results
         results_file = Path(metadata.results_dir) / "final_results.json"
         with open(results_file, 'w') as f:
-            json.dump(final_results, f, indent=2)
+            serializable_results = _convert_to_json_serializable(final_results)
+            json.dump(serializable_results, f, indent=2)
         
         print(f"✅ Completed experiment: {experiment_id}")
     
@@ -331,9 +354,9 @@ class ExperimentManager:
     def _save_experiments(self):
         """Save experiments to metadata file."""
         try:
-            data = {exp_id: asdict(metadata) 
+            data = {exp_id: _convert_to_json_serializable(asdict(metadata))
                    for exp_id, metadata in self.experiments.items()}
-            
+
             with open(self.metadata_file, 'w') as f:
                 json.dump(data, f, indent=2)
                 
