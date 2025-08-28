@@ -7,6 +7,7 @@ import random
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Set
 from pathlib import Path
+from ..config.hyperparameters import get_hyperparameter_config
 
 # Handle imports for both module and standalone execution
 if __name__ == "__main__":
@@ -25,14 +26,15 @@ else:
 class SemanticNeighborhoods:
     """Manages semantic neighborhoods for token mutations."""
     
-    def __init__(self, n_neighbors: int = 50):
+    def __init__(self, n_neighbors: Optional[int] = None):
         """
         Initialize semantic neighborhoods.
-        
+
         Args:
-            n_neighbors: Number of neighbors to store for each token
+            n_neighbors: Number of neighbors to store for each token (uses hyperparameter config if None)
         """
-        self.n_neighbors = n_neighbors
+        config = get_hyperparameter_config()
+        self.n_neighbors = n_neighbors if n_neighbors is not None else config.n_neighbors
         self.neighborhoods = {}  # token_id -> List[token_id]
         self.embeddings = None
         self.vocabulary = None
@@ -140,17 +142,19 @@ class SemanticNeighborhoods:
         n_to_sample = min(self.n_neighbors, len(candidates))
         return random.sample(candidates, n_to_sample)
     
-    def get_neighbor(self, token_id: int, semantic_prob: float = 0.9) -> int:
+    def get_neighbor(self, token_id: int, semantic_prob: Optional[float] = None) -> int:
         """
         Get a neighbor for mutation.
-        
+
         Args:
             token_id: Original token ID
-            semantic_prob: Probability of using semantic neighbor vs random
-            
+            semantic_prob: Probability of using semantic neighbor vs random (uses hyperparameter config if None)
+
         Returns:
             Neighbor token ID
         """
+        config = get_hyperparameter_config()
+        semantic_prob = semantic_prob if semantic_prob is not None else config.semantic_prob
         if not self.neighborhoods_built:
             raise ValueError("Neighborhoods must be built first")
         
@@ -167,8 +171,10 @@ class SemanticNeighborhoods:
             # Use random token
             return self.vocabulary.get_random_token_id()
     
-    def get_multiple_neighbors(self, token_id: int, n: int = 5) -> List[int]:
+    def get_multiple_neighbors(self, token_id: int, n: Optional[int] = None) -> List[int]:
         """Get multiple neighbors for a token."""
+        config = get_hyperparameter_config()
+        n = n if n is not None else config.neighbor_count
         if not self.neighborhoods_built:
             raise ValueError("Neighborhoods must be built first")
         
@@ -260,8 +266,8 @@ if __name__ == "__main__":
         embeddings.load_glove_embeddings(embeddings_dir / "glove.6B.100d.txt", 1000)
         embeddings.save_embeddings(embeddings_file)
     
-    # Build neighborhoods
-    neighborhoods = SemanticNeighborhoods(n_neighbors=20)
+    # Build neighborhoods (using hyperparameter defaults)
+    neighborhoods = SemanticNeighborhoods()
     neighborhoods.build_neighborhoods(vocabulary, embeddings)
     
     # Test neighborhood lookup
@@ -269,7 +275,7 @@ if __name__ == "__main__":
     for token in test_tokens:
         if token in vocabulary.token_to_id:
             token_id = vocabulary.token_to_id[token]
-            neighbors = neighborhoods.get_multiple_neighbors(token_id, 5)
+            neighbors = neighborhoods.get_multiple_neighbors(token_id)
             neighbor_tokens = [vocabulary.id_to_token[nid] for nid in neighbors]
             print(f"\nNeighbors of '{token}': {neighbor_tokens}")
     

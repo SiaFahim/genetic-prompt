@@ -16,11 +16,13 @@ if __name__ == "__main__":
     from src.utils.config import config
     from src.embeddings.vocabulary import vocabulary
     from src.embeddings.neighborhoods import semantic_neighborhoods
+    from src.config.hyperparameters import get_hyperparameter_config
 else:
     from .genome import PromptGenome
     from ..utils.config import config
     from ..embeddings.vocabulary import vocabulary
     from ..embeddings.neighborhoods import semantic_neighborhoods
+    from ..config.hyperparameters import get_hyperparameter_config
 
 
 class MutationType(Enum):
@@ -33,19 +35,22 @@ class MutationType(Enum):
     DUPLICATION = "duplication"
 
 
-def semantic_mutation(genome: PromptGenome, mutation_rate: float = 0.1, 
-                     semantic_prob: float = 0.9) -> PromptGenome:
+def semantic_mutation(genome: PromptGenome, mutation_rate: Optional[float] = None,
+                     semantic_prob: Optional[float] = None) -> PromptGenome:
     """
     Perform semantic mutation using neighborhood information.
-    
+
     Args:
         genome: Genome to mutate
-        mutation_rate: Probability of mutating each token
-        semantic_prob: Probability of using semantic neighbor vs random token
-        
+        mutation_rate: Probability of mutating each token (uses hyperparameter config if None)
+        semantic_prob: Probability of using semantic neighbor vs random token (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    mutation_rate = mutation_rate if mutation_rate is not None else config.mutation_rate
+    semantic_prob = semantic_prob if semantic_prob is not None else config.semantic_prob
     if genome.is_empty():
         return genome.copy()
     
@@ -84,17 +89,19 @@ def semantic_mutation(genome: PromptGenome, mutation_rate: float = 0.1,
     return mutated_genome
 
 
-def random_mutation(genome: PromptGenome, mutation_rate: float = 0.1) -> PromptGenome:
+def random_mutation(genome: PromptGenome, mutation_rate: Optional[float] = None) -> PromptGenome:
     """
     Perform random mutation by replacing tokens with random ones.
-    
+
     Args:
         genome: Genome to mutate
-        mutation_rate: Probability of mutating each token
-        
+        mutation_rate: Probability of mutating each token (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    mutation_rate = mutation_rate if mutation_rate is not None else config.mutation_rate
     if genome.is_empty():
         return genome.copy()
     
@@ -125,19 +132,22 @@ def random_mutation(genome: PromptGenome, mutation_rate: float = 0.1) -> PromptG
     return mutated_genome
 
 
-def insertion_mutation(genome: PromptGenome, insertion_rate: float = 0.05,
-                      max_insertions: int = 3) -> PromptGenome:
+def insertion_mutation(genome: PromptGenome, insertion_rate: Optional[float] = None,
+                      max_insertions: Optional[int] = None) -> PromptGenome:
     """
     Perform insertion mutation by adding new tokens.
-    
+
     Args:
         genome: Genome to mutate
-        insertion_rate: Probability of insertion at each position
-        max_insertions: Maximum number of insertions
-        
+        insertion_rate: Probability of insertion at each position (uses hyperparameter config if None)
+        max_insertions: Maximum number of insertions (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    insertion_rate = insertion_rate if insertion_rate is not None else config.insertion_rate
+    max_insertions = max_insertions if max_insertions is not None else config.max_insertions
     if genome.length() == 0:
         # Insert into empty genome
         mutated_genome = genome.copy()
@@ -183,19 +193,22 @@ def insertion_mutation(genome: PromptGenome, insertion_rate: float = 0.05,
     return mutated_genome
 
 
-def deletion_mutation(genome: PromptGenome, deletion_rate: float = 0.05,
-                     min_length: int = 3) -> PromptGenome:
+def deletion_mutation(genome: PromptGenome, deletion_rate: Optional[float] = None,
+                     min_length: Optional[int] = None) -> PromptGenome:
     """
     Perform deletion mutation by removing tokens.
-    
+
     Args:
         genome: Genome to mutate
-        deletion_rate: Probability of deleting each token
-        min_length: Minimum length to maintain
-        
+        deletion_rate: Probability of deleting each token (uses hyperparameter config if None)
+        min_length: Minimum length to maintain (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    deletion_rate = deletion_rate if deletion_rate is not None else config.deletion_rate
+    min_length = min_length if min_length is not None else config.min_genome_length
     if genome.length() <= min_length:
         return genome.copy()
     
@@ -229,17 +242,19 @@ def deletion_mutation(genome: PromptGenome, deletion_rate: float = 0.05,
     return mutated_genome
 
 
-def swap_mutation(genome: PromptGenome, swap_rate: float = 0.05) -> PromptGenome:
+def swap_mutation(genome: PromptGenome, swap_rate: Optional[float] = None) -> PromptGenome:
     """
     Perform swap mutation by swapping adjacent tokens.
-    
+
     Args:
         genome: Genome to mutate
-        swap_rate: Probability of swapping at each position
-        
+        swap_rate: Probability of swapping at each position (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    swap_rate = swap_rate if swap_rate is not None else config.swap_rate
     if genome.length() < 2:
         return genome.copy()
     
@@ -274,19 +289,22 @@ def swap_mutation(genome: PromptGenome, swap_rate: float = 0.05) -> PromptGenome
     return mutated_genome
 
 
-def duplication_mutation(genome: PromptGenome, duplication_rate: float = 0.02,
-                        max_length: int = 50) -> PromptGenome:
+def duplication_mutation(genome: PromptGenome, duplication_rate: Optional[float] = None,
+                        max_length: Optional[int] = None) -> PromptGenome:
     """
     Perform duplication mutation by duplicating tokens or segments.
-    
+
     Args:
         genome: Genome to mutate
-        duplication_rate: Probability of duplication
-        max_length: Maximum genome length
-        
+        duplication_rate: Probability of duplication (uses hyperparameter config if None)
+        max_length: Maximum genome length (uses hyperparameter config if None)
+
     Returns:
         Mutated genome
     """
+    config = get_hyperparameter_config()
+    duplication_rate = duplication_rate if duplication_rate is not None else config.duplication_rate
+    max_length = max_length if max_length is not None else config.max_genome_length
     if genome.is_empty() or genome.length() >= max_length:
         return genome.copy()
     

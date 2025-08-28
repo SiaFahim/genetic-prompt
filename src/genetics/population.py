@@ -19,12 +19,14 @@ if __name__ == "__main__":
     from src.genetics.mutation import mutate, MutationType
     from src.utils.config import config
     from src.embeddings.vocabulary import vocabulary
+    from src.config.hyperparameters import get_hyperparameter_config
 else:
     from .genome import PromptGenome, create_random_genome
     from .crossover import crossover, CrossoverType
     from .mutation import mutate, MutationType
     from ..utils.config import config
     from ..embeddings.vocabulary import vocabulary
+    from ..config.hyperparameters import get_hyperparameter_config
 
 
 class Population:
@@ -32,16 +34,17 @@ class Population:
     Manages a population of PromptGenomes for genetic algorithm evolution.
     """
     
-    def __init__(self, population_size: int = 50, max_genome_length: int = 50):
+    def __init__(self, population_size: Optional[int] = None, max_genome_length: Optional[int] = None):
         """
         Initialize population.
-        
+
         Args:
-            population_size: Number of genomes in population
-            max_genome_length: Maximum allowed genome length
+            population_size: Number of genomes in population (uses hyperparameter config if None)
+            max_genome_length: Maximum allowed genome length (uses hyperparameter config if None)
         """
-        self.population_size = population_size
-        self.max_genome_length = max_genome_length
+        config = get_hyperparameter_config()
+        self.population_size = population_size if population_size is not None else config.population_size
+        self.max_genome_length = max_genome_length if max_genome_length is not None else config.max_genome_length
         self.genomes: List[PromptGenome] = []
         self.generation = 0
         self.best_genome: Optional[PromptGenome] = None
@@ -49,14 +52,17 @@ class Population:
         self.fitness_history = []
         self.diversity_history = []
     
-    def initialize_random(self, min_length: int = 5, max_length: int = 20):
+    def initialize_random(self, min_length: Optional[int] = None, max_length: Optional[int] = None):
         """
         Initialize population with random genomes.
-        
+
         Args:
-            min_length: Minimum genome length
-            max_length: Maximum genome length
+            min_length: Minimum genome length (uses hyperparameter config if None)
+            max_length: Maximum genome length (uses hyperparameter config if None)
         """
+        config = get_hyperparameter_config()
+        min_length = min_length if min_length is not None else config.min_initial_length
+        max_length = max_length if max_length is not None else config.max_initial_length
         self.genomes = []
         for _ in range(self.population_size):
             genome = create_random_genome(min_length, max_length)
@@ -82,7 +88,7 @@ class Population:
         
         # Fill remaining slots with random genomes if needed
         while len(self.genomes) < self.population_size:
-            genome = create_random_genome(5, 20)
+            genome = create_random_genome(min_length, max_length)
             genome.generation = self.generation
             self.genomes.append(genome)
         
@@ -186,16 +192,18 @@ class Population:
         
         return statistics.mean(diversity_scores) if diversity_scores else 0.0
     
-    def tournament_selection(self, tournament_size: int = 3) -> PromptGenome:
+    def tournament_selection(self, tournament_size: Optional[int] = None) -> PromptGenome:
         """
         Select a genome using tournament selection.
-        
+
         Args:
-            tournament_size: Number of genomes in tournament
-            
+            tournament_size: Number of genomes in tournament (uses hyperparameter config if None)
+
         Returns:
             Selected genome
         """
+        config = get_hyperparameter_config()
+        tournament_size = tournament_size if tournament_size is not None else config.tournament_size
         tournament = random.sample(self.genomes, min(tournament_size, len(self.genomes)))
         
         # Select best from tournament
@@ -247,16 +255,21 @@ class Population:
         # Fallback
         return self.genomes[-1]
     
-    def evolve_generation(self, crossover_rate: float = 0.8, mutation_rate: float = 0.2,
-                         elite_size: int = 2) -> None:
+    def evolve_generation(self, crossover_rate: Optional[float] = None,
+                         mutation_rate: Optional[float] = None,
+                         elite_size: Optional[int] = None) -> None:
         """
         Evolve the population to the next generation.
-        
+
         Args:
-            crossover_rate: Probability of crossover
-            mutation_rate: Probability of mutation
-            elite_size: Number of best genomes to preserve
+            crossover_rate: Probability of crossover (uses hyperparameter config if None)
+            mutation_rate: Probability of mutation (uses hyperparameter config if None)
+            elite_size: Number of best genomes to preserve (uses hyperparameter config if None)
         """
+        config = get_hyperparameter_config()
+        crossover_rate = crossover_rate if crossover_rate is not None else config.crossover_rate
+        mutation_rate = mutation_rate if mutation_rate is not None else config.mutation_rate
+        elite_size = elite_size if elite_size is not None else config.elite_size
         # Sort by fitness (descending)
         self.genomes.sort(key=lambda g: g.fitness if g.fitness is not None else float('-inf'), 
                          reverse=True)
@@ -292,8 +305,8 @@ class Population:
         # Apply mutations
         for i in range(elite_size, len(new_population)):
             if random.random() < mutation_rate:
-                new_population[i] = mutate(new_population[i], MutationType.SEMANTIC, 
-                                         mutation_rate=0.1)
+                new_population[i] = mutate(new_population[i], MutationType.SEMANTIC,
+                                         mutation_rate=config.mutation_rate)
         
         # Update population
         self.genomes = new_population[:self.population_size]
@@ -317,7 +330,11 @@ class Population:
         """Get comprehensive population statistics."""
         fitness_stats = self.get_fitness_statistics()
         diversity = self.calculate_diversity()
-        
+
+        # Calculate current best fitness
+        current_best = self.get_best_genome()
+        current_best_fitness = current_best.fitness if current_best and current_best.fitness is not None else float('-inf')
+
         # Length statistics
         lengths = [g.length() for g in self.genomes]
         length_stats = {
@@ -325,19 +342,19 @@ class Population:
             'min_length': min(lengths) if lengths else 0,
             'max_length': max(lengths) if lengths else 0
         }
-        
+
         # Age statistics
         ages = [g.age for g in self.genomes]
         age_stats = {
             'mean_age': statistics.mean(ages) if ages else 0,
             'max_age': max(ages) if ages else 0
         }
-        
+
         return {
             'generation': self.generation,
             'population_size': len(self.genomes),
             'diversity': diversity,
-            'best_fitness': self.best_fitness,
+            'best_fitness': current_best_fitness,
             'fitness_stats': fitness_stats,
             'length_stats': length_stats,
             'age_stats': age_stats
@@ -365,13 +382,13 @@ if __name__ == "__main__":
         print("Vocabulary not found, creating basic vocabulary...")
         vocabulary._create_basic_vocabulary()
     
-    # Create population
-    population = Population(population_size=10)
-    
-    # Test random initialization
-    population.initialize_random(min_length=5, max_length=15)
+    # Create population (using hyperparameter defaults)
+    population = Population()
+
+    # Test random initialization (using hyperparameter defaults)
+    population.initialize_random()
     print(f"Population size: {len(population)}")
-    
+
     # Set some random fitnesses
     for genome in population:
         genome.set_fitness(random.uniform(0.0, 1.0))
@@ -384,8 +401,12 @@ if __name__ == "__main__":
     selected = population.tournament_selection()
     print(f"Tournament selected: {selected}")
     
-    # Test evolution
+    # Test evolution (using hyperparameter defaults)
     print("\nEvolving population...")
+    config = get_hyperparameter_config()
+    print(f"Using hyperparameters: population_size={config.population_size}, "
+          f"crossover_rate={config.crossover_rate}, mutation_rate={config.mutation_rate}")
+
     for gen in range(3):
         population.evolve_generation()
         stats = population.get_population_statistics()
