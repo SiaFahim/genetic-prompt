@@ -140,7 +140,7 @@ class GSM8KExperimentRunner:
                 use_cache=self.config.get('use_cache', True),
                 max_problems=self.config.get('max_problems', 100)
             )
-            print("   ✅ Evaluation pipeline ready")
+            print(f"   ✅ Evaluation pipeline ready (Model: {self.evaluation_pipeline.llm_interface.model})")
             
             # Get seed prompts
             print("🌱 Loading seed prompts...")

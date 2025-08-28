@@ -104,7 +104,7 @@ def test_config_extraction_from_nested_format():
             'crossover_rate': 0.7,
             'mutation_rate': 0.3
         },
-        'model_name': 'gpt-3.5-turbo',
+        'model_name': 'gpt-4o',
         'max_problems': 50
     }
     

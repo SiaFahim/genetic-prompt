@@ -72,7 +72,7 @@ jupyter notebook GSM8K_Genetic_Algorithm_Tutorial.ipynb
 
 - ✅ **50 High-Quality Seed Prompts** across 10 mathematical reasoning categories
 - ✅ **Real-time Monitoring** with fitness evolution plots and convergence analysis
-- ✅ **Multiple LLM Support** (GPT-3.5, GPT-4, Claude-3)
+- ✅ **Multiple LLM Support** (GPT-4o default, GPT-3.5-turbo, Claude-3)
 - ✅ **Intelligent Caching** to minimize API costs
 - ✅ **Comprehensive Logging** with experiment tracking and result archival
 - ✅ **8 Experiment Presets** for different research scenarios
@@ -102,7 +102,7 @@ python scripts/run_experiment.py \
   --preset standard \
   --population-size 30 \
   --max-generations 50 \
-  --model gpt-4 \
+  --model gpt-4o \
   --max-problems 150
 
 # Dry run to see configuration
@@ -124,7 +124,7 @@ config = {
         'max_generations': 50,
         'target_fitness': 0.8
     },
-    'model_name': 'gpt-3.5-turbo',
+    'model_name': 'gpt-4o',
     'max_problems': 100
 }
 
@@ -140,7 +140,7 @@ print(f"Best fitness: {results['results']['best_fitness']:.3f}")
 - Study population size impact
 
 ### Model Comparisons
-- GPT-3.5 vs GPT-4 performance
+- GPT-4o vs GPT-3.5-turbo performance
 - Temperature sensitivity analysis
 - Cross-model prompt transferability
 

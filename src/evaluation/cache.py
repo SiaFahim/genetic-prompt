@@ -324,7 +324,7 @@ if __name__ == "__main__":
         {'id': 'test_1', 'question': 'What is 2+2?', 'final_answer': 4.0},
         {'id': 'test_2', 'question': 'What is 3*5?', 'final_answer': 15.0}
     ]
-    test_model_info = {'model': 'gpt-4', 'temperature': 0.0}
+    test_model_info = {'model': 'gpt-4o', 'temperature': 0.0}
     
     # Test cache key generation
     cache_key = test_cache.get_cache_key(test_genome, test_problems, test_model_info)

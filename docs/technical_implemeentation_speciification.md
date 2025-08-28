@@ -252,7 +252,7 @@ def create_initial_population(seed_prompts, population_size=500):
 #### Task 3.1.1: API Client Setup
 ```python
 class LLMEvaluator:
-    def __init__(self, api_key, model="gpt-4", cache_dir="./data/cache"):
+    def __init__(self, api_key, model="gpt-4o", cache_dir="./data/cache"):
         self.client = OpenAI(api_key=api_key)
         self.model = model
         self.cache = DiskCache(cache_dir)

@@ -263,7 +263,7 @@ if __name__ == "__main__":
     else:
         try:
             # Create interface
-            llm = LLMInterface(model="gpt-3.5-turbo", temperature=0.0, max_tokens=150)
+            llm = LLMInterface(model="gpt-4o", temperature=0.0, max_tokens=150)
             
             # Test with a simple math problem
             test_prompt = "Let's solve this step by step."

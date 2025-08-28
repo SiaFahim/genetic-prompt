@@ -29,7 +29,7 @@ def test_llm_interface():
     
     try:
         # Create interface
-        llm = LLMInterface(model="gpt-3.5-turbo", temperature=0.0, max_tokens=150)
+        llm = LLMInterface(model="gpt-4o", temperature=0.0, max_tokens=150)
         
         # Test simple math problem
         test_prompt = "Let's solve this step by step."
@@ -191,7 +191,7 @@ def test_evaluation_pipeline():
     # Test with mock LLM interface for speed
     class MockLLMInterface:
         def __init__(self):
-            self.model = "mock-gpt-4"
+            self.model = "mock-gpt-4o"
             self.temperature = 0.0
             self.max_tokens = 150
         
@@ -262,7 +262,7 @@ def test_real_api_evaluation():
     
     try:
         # Create real LLM interface
-        llm = LLMInterface(model="gpt-3.5-turbo", temperature=0.0, max_tokens=100)
+        llm = LLMInterface(model="gpt-4o", temperature=0.0, max_tokens=100)
         
         # Test single evaluation
         test_genome = PromptGenome.from_text("Let's solve this step by step.")

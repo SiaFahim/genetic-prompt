@@ -78,7 +78,7 @@ Examples:
     
     # API parameters
     parser.add_argument('--model', type=str,
-                       help='LLM model to use (e.g., gpt-3.5-turbo, gpt-4)')
+                       help='LLM model to use (default: gpt-4o, alternatives: gpt-3.5-turbo, claude-3-sonnet-20240229)')
     parser.add_argument('--temperature', type=float,
                        help='LLM temperature')
     parser.add_argument('--max-tokens', type=int,
@@ -230,6 +230,7 @@ def main():
         print(f"   Population: {config.population_size}")
         print(f"   Generations: {config.max_generations}")
         print(f"   Problems: {config.max_problems}")
+        print(f"   Model: {config.model_name}")
         
         try:
             response = input("\nProceed with experiment? [Y/n]: ").strip().lower()

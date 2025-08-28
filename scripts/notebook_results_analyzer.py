@@ -178,7 +178,7 @@ def get_experiment_recommendations():
     print("\n🎯 For Quick Testing:")
     print("   • Use 'quick_test' preset (10 population, 15 generations)")
     print("   • Start with 20-30 evaluation problems")
-    print("   • Use gpt-3.5-turbo for cost efficiency")
+    print("   • Default GPT-4o provides best performance (use gpt-3.5-turbo for cost efficiency)")
     
     print("\n🔬 For Research:")
     print("   • Use 'standard' preset (50 population, 100 generations)")

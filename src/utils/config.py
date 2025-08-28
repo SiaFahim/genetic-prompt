@@ -45,7 +45,7 @@ class Config:
     @property
     def default_model(self) -> str:
         """Get default model name."""
-        return os.getenv('DEFAULT_MODEL', 'gpt-4')
+        return os.getenv('DEFAULT_MODEL', 'gpt-4o')
     
     @property
     def temperature(self) -> float:

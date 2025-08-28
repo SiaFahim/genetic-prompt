@@ -72,7 +72,7 @@ class ExperimentConfig:
     performance_monitoring: bool = True
     
     # API parameters
-    model_name: str = "gpt-3.5-turbo"
+    model_name: str = "gpt-4o"
     temperature: float = 0.0
     max_tokens: int = 150
     
@@ -364,8 +364,9 @@ class ConfigurationManager:
         summary.append(f"   Crossover: {config.crossover_rate:.1%}")
         summary.append(f"   Mutation: {config.mutation_rate:.1%}")
         summary.append(f"   Selection: {config.selection_method.value}")
+        summary.append(f"   Model: {config.model_name}")
         summary.append(f"   Target Fitness: {config.target_fitness}")
-        
+
         return "\n".join(summary)
 
 
