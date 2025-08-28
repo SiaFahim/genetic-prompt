@@ -246,5 +246,36 @@
     "convergence_reason": "",
     "total_time": 0.0,
     "completed_at": 1756329720.3723881
+  },
+  "My GSM8K Evolution Experiment_1756346591_59633612": {
+    "experiment_id": "My GSM8K Evolution Experiment_1756346591_59633612",
+    "experiment_name": "My GSM8K Evolution Experiment",
+    "description": "Custom experiment for prompt evolution",
+    "created_at": 1756346591.5727732,
+    "status": "running",
+    "config": {
+      "population_size": 50,
+      "max_generations": 100,
+      "crossover_rate": 0.8,
+      "mutation_rate": 0.2,
+      "elite_size": 5,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_type": "single_point",
+      "mutation_type": "semantic",
+      "target_fitness": 0.85,
+      "convergence_patience": 20,
+      "adaptive_parameters": true,
+      "save_checkpoints": true,
+      "checkpoint_interval": 10
+    },
+    "results_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/My GSM8K Evolution Experiment_1756346591_59633612/results",
+    "logs_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/My GSM8K Evolution Experiment_1756346591_59633612/logs",
+    "plots_dir": "/Users/Odyssey/Projects/genetic-prompt/data/experiments/My GSM8K Evolution Experiment_1756346591_59633612/plots",
+    "total_generations": 0,
+    "best_fitness": 0.0,
+    "convergence_reason": "",
+    "total_time": 0.0,
+    "completed_at": null
   }
 }
