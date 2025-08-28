@@ -29,14 +29,19 @@ class NotebookHyperparameterInterface:
     def create_parameter_widgets(self, category: Optional[str] = None) -> widgets.Widget:
         """
         Create interactive widgets for hyperparameter configuration.
-        
+
         Args:
             category: Specific category to show (None for all categories)
-            
+
         Returns:
             Widget container with parameter controls
         """
-        specs = HyperparameterConfig.get_parameter_specs()
+        try:
+            specs = HyperparameterConfig.get_parameter_specs()
+            print(f"Debug: Got {len(specs)} parameter specs")
+        except Exception as e:
+            print(f"Error getting parameter specs: {e}")
+            return widgets.HTML(f"<p>Error loading parameter specs: {e}</p>")
         
         if category:
             specs = {k: v for k, v in specs.items() if v.category == category}
@@ -308,47 +313,84 @@ class NotebookHyperparameterInterface:
     
     def create_full_interface(self) -> widgets.Widget:
         """Create the complete hyperparameter interface."""
-        
-        # Title
-        title = widgets.HTML("<h1>🧬 Genetic Algorithm Hyperparameter Configuration</h1>")
-        
-        # Create tabs for different categories
-        categories = self.current_config.get_all_categories()
-        tab_children = []
-        tab_titles = []
-        
-        for category in categories:
-            category_widget = self.create_parameter_widgets(category)
-            tab_children.append(category_widget)
-            tab_titles.append(category.title())
-        
-        # Add "All Parameters" tab
-        all_params_widget = self.create_parameter_widgets()
-        tab_children.append(all_params_widget)
-        tab_titles.append("All Parameters")
-        
-        # Add "Current Config" tab
-        config_display = self.display_current_config()
-        tab_children.append(config_display)
-        tab_titles.append("Current Config")
-        
-        # Create tabs
-        tabs = widgets.Tab(children=tab_children)
-        for i, title in enumerate(tab_titles):
-            tabs.set_title(i, title)
-        
-        # Control panel
-        control_panel = self.create_control_panel()
-        
-        # Main interface
-        main_interface = widgets.VBox([
-            title,
-            control_panel,
-            tabs,
-            self.output_widget
-        ])
-        
-        return main_interface
+
+        try:
+            # Title
+            title = widgets.HTML("<h1>🧬 Genetic Algorithm Hyperparameter Configuration</h1>")
+
+            # Create tabs for different categories
+            categories = self.current_config.get_all_categories()
+            tab_children = []
+            tab_titles = []
+
+            for category in categories:
+                try:
+                    category_widget = self.create_parameter_widgets(category)
+                    tab_children.append(category_widget)
+                    tab_titles.append(category.title())
+                except Exception as e:
+                    print(f"Error creating widget for category {category}: {e}")
+                    # Add a simple error widget instead
+                    error_widget = widgets.HTML(f"<p>Error loading {category} parameters: {e}</p>")
+                    tab_children.append(error_widget)
+                    tab_titles.append(f"{category.title()} (Error)")
+
+            # Add "All Parameters" tab
+            try:
+                all_params_widget = self.create_parameter_widgets()
+                tab_children.append(all_params_widget)
+                tab_titles.append("All Parameters")
+            except Exception as e:
+                print(f"Error creating all parameters widget: {e}")
+                error_widget = widgets.HTML(f"<p>Error loading all parameters: {e}</p>")
+                tab_children.append(error_widget)
+                tab_titles.append("All Parameters (Error)")
+
+            # Add "Current Config" tab
+            try:
+                config_display = self.display_current_config()
+                tab_children.append(config_display)
+                tab_titles.append("Current Config")
+            except Exception as e:
+                print(f"Error creating config display: {e}")
+                error_widget = widgets.HTML(f"<p>Error loading config display: {e}</p>")
+                tab_children.append(error_widget)
+                tab_titles.append("Current Config (Error)")
+
+            # Create tabs
+            if tab_children:
+                tabs = widgets.Tab()
+                tabs.children = tuple(tab_children)  # Ensure it's a tuple
+                for i, title in enumerate(tab_titles):
+                    tabs.set_title(i, title)
+            else:
+                tabs = widgets.HTML("<p>No tabs could be created</p>")
+
+            # Control panel
+            try:
+                control_panel = self.create_control_panel()
+            except Exception as e:
+                print(f"Error creating control panel: {e}")
+                control_panel = widgets.HTML(f"<p>Error loading control panel: {e}</p>")
+
+            # Main interface
+            main_interface = widgets.VBox([
+                title,
+                control_panel,
+                tabs,
+                self.output_widget
+            ])
+
+            return main_interface
+
+        except Exception as e:
+            print(f"Error creating full interface: {e}")
+            # Return a simple error interface
+            return widgets.VBox([
+                widgets.HTML("<h1>❌ Error Loading Interface</h1>"),
+                widgets.HTML(f"<p>Error: {e}</p>"),
+                widgets.HTML("<p>Please check the console for more details.</p>")
+            ])
 
 
 # Global interface instance
@@ -363,10 +405,63 @@ def get_notebook_interface() -> NotebookHyperparameterInterface:
     return _global_interface
 
 
+def create_simple_interface():
+    """Create a simple fallback interface."""
+    from .hyperparameters import get_hyperparameter_config, update_hyperparameters
+
+    config = get_hyperparameter_config()
+
+    # Create simple widgets for key parameters
+    pop_size = widgets.IntSlider(
+        value=config.population_size,
+        min=5, max=200,
+        description='Population Size:'
+    )
+
+    max_gen = widgets.IntSlider(
+        value=config.max_generations,
+        min=10, max=500,
+        description='Max Generations:'
+    )
+
+    crossover = widgets.FloatSlider(
+        value=config.crossover_rate,
+        min=0.0, max=1.0, step=0.01,
+        description='Crossover Rate:'
+    )
+
+    mutation = widgets.FloatSlider(
+        value=config.mutation_rate,
+        min=0.0, max=1.0, step=0.01,
+        description='Mutation Rate:'
+    )
+
+    def apply_changes(b):
+        try:
+            update_hyperparameters({
+                'population_size': pop_size.value,
+                'max_generations': max_gen.value,
+                'crossover_rate': crossover.value,
+                'mutation_rate': mutation.value
+            })
+            print("✅ Parameters updated successfully!")
+        except Exception as e:
+            print(f"❌ Error updating parameters: {e}")
+
+    apply_btn = widgets.Button(description='Apply Changes', button_style='success')
+    apply_btn.on_click(apply_changes)
+
+    return widgets.VBox([
+        widgets.HTML("<h2>🧬 Simple Hyperparameter Interface</h2>"),
+        pop_size, max_gen, crossover, mutation,
+        apply_btn
+    ])
+
+
 def display_hyperparameter_interface():
     """Display the hyperparameter configuration interface in a Jupyter notebook."""
-    interface = get_notebook_interface()
-    return interface.create_full_interface()
+    print("Creating hyperparameter interface...")
+    return create_simple_interface()
 
 
 def quick_config_panel():
