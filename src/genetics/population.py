@@ -71,21 +71,26 @@ class Population:
         
         print(f"Initialized population with {len(self.genomes)} random genomes")
     
-    def initialize_from_seeds(self, seed_prompts: List[str]):
+    def initialize_from_seeds(self, seed_prompts: List[str], min_length: Optional[int] = None, max_length: Optional[int] = None):
         """
         Initialize population from seed prompts.
-        
+
         Args:
             seed_prompts: List of seed prompt texts
+            min_length: Minimum genome length for random fill (uses hyperparameter config if None)
+            max_length: Maximum genome length for random fill (uses hyperparameter config if None)
         """
+        config = get_hyperparameter_config()
+        min_length = min_length if min_length is not None else config.min_initial_length
+        max_length = max_length if max_length is not None else config.max_initial_length
         self.genomes = []
-        
+
         # Create genomes from seed prompts
         for i, prompt in enumerate(seed_prompts):
             genome = PromptGenome.from_text(prompt, genome_id=f"seed_{i}")
             genome.generation = self.generation
             self.genomes.append(genome)
-        
+
         # Fill remaining slots with random genomes if needed
         while len(self.genomes) < self.population_size:
             genome = create_random_genome(min_length, max_length)
