@@ -13,6 +13,8 @@ from src.embeddings.semantic_utils import SemanticNeighbors
 from src.genetics.genome import PromptGenome
 from src.genetics.population import initialize_population
 from src.genetics.evolution import run_generation
+from src.utils.logging import JSONLLogger
+from src.utils.checkpointing import find_latest_checkpoint, load_checkpoint
 from src.evaluation.evaluator import LLMEvaluator
 
 
@@ -33,6 +35,7 @@ def main():
     p.add_argument("--eval_size", type=int, default=20)
     p.add_argument("--pop", type=int, default=None)
     p.add_argument("--concurrency", type=int, default=None)
+    p.add_argument("--resume", action="store_true", help="Resume from latest checkpoint if present")
     args = p.parse_args()
 
     cfg = load_config(args.config)
@@ -64,8 +67,18 @@ def main():
         genome.generation_born = -1
         seeds.append(genome)
 
-    # Population
-    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
+    # Population (resume if requested and available)
+    if args.resume:
+        latest = find_latest_checkpoint(cfg.paths.get("checkpoints", "data/checkpoints"))
+        if latest:
+            gen_num, latest_path = latest
+            print(f"Resuming from checkpoint {latest_path} (generation {gen_num})")
+            population, _best, _meta = load_checkpoint(latest_path)
+        else:
+            print("No checkpoint found; starting fresh")
+            population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
+    else:
+        population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
 
     # Evaluator
     api_key = cfg.api_keys.get("openai")
