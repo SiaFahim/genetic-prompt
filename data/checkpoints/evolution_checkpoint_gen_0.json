@@ -45,8 +45,8 @@
           "current_diversity": 0.0
         }
       },
-      "evaluation_time": 0.0342707633972168,
-      "evolution_time": 0.03661680221557617,
+      "evaluation_time": 0.006737947463989258,
+      "evolution_time": 0.008283138275146484,
       "population_stats": {
         "generation": 0,
         "population_size": 0,

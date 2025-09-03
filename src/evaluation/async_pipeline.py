@@ -200,8 +200,7 @@ class AsyncEvaluationPipeline:
         ]
         
         if self.population_batch_config.detailed_logging:
-            print(f"Processing population of {len(population.genomes)} genomes in "
-                  f"{len(genome_batches)} batches of size {self.population_batch_config.genome_batch_size}")
+            print(f"🧬 Evaluating {len(population.genomes)} genomes in {len(genome_batches)} batches")
         
         # Progress tracking
         if self.population_batch_config.enable_progress_bar and progress_callback is None:
@@ -256,8 +255,8 @@ class AsyncEvaluationPipeline:
                         pbar.set_description(f"Evaluating population (fitness: {result.fitness_components.overall_fitness:.3f})")
             
             batch_time = time.time() - batch_start_time
-            if self.population_batch_config.detailed_logging:
-                print(f"Genome batch {batch_idx + 1}/{len(genome_batches)} completed in {batch_time:.2f}s")
+            if self.population_batch_config.detailed_logging and len(genome_batches) > 1:
+                print(f"  Batch {batch_idx + 1}/{len(genome_batches)}: {batch_time:.1f}s")
         
         if self.population_batch_config.enable_progress_bar and progress_callback is None:
             pbar.close()
@@ -291,7 +290,7 @@ class AsyncEvaluationPipeline:
         problems = gsm8k_dataset.get_adaptive_eval_problems(generation)
 
         if self.population_batch_config.detailed_logging:
-            print(f"Generation {generation}: Evaluating on {len(problems)} problems using async pipeline")
+            print(f"📊 Gen {generation}: {len(problems)} problems")
 
         return await self.evaluate_population_async(population, problems)
 

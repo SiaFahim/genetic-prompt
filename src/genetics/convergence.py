@@ -123,7 +123,25 @@ class ConvergenceDetector:
         """Check all convergence conditions."""
         
         generations_since_improvement = self.generation_count - self.last_improvement_generation
-        
+
+        # Check for empty population first (critical validation)
+        # Note: This check assumes we have access to population through the calling context
+        # The diversity=0.000 case typically indicates empty population
+        if diversity == 0.0 and current_best == 0.0 and current_mean == 0.0:
+            return ConvergenceStatus(
+                converged=True,
+                reason=ConvergenceReason.DIVERSITY_LOSS,
+                confidence=1.0,
+                generations_since_improvement=generations_since_improvement,
+                current_best_fitness=current_best,
+                diversity_score=diversity,
+                plateau_length=0,
+                details={
+                    'message': 'Population appears to be empty - no genomes to evaluate',
+                    'troubleshooting': 'Check population initialization in evolution controller'
+                }
+            )
+
         # Check target fitness
         if self.target_fitness is not None and current_best >= self.target_fitness:
             return ConvergenceStatus(

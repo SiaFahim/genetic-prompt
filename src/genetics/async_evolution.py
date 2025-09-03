@@ -103,6 +103,10 @@ class AsyncEvolutionController(EvolutionController):
             progress_callback=progress_callback
         )
         
+        # Initialize population (CRITICAL FIX)
+        self.initialize_population()
+        print(f"✅ Population initialized with {len(self.population)} genomes")
+
         # Performance tracking
         self.async_evaluation_times = []
         self.sync_evaluation_times = []
@@ -126,10 +130,9 @@ class AsyncEvolutionController(EvolutionController):
             self.async_evaluation_times.append(eval_time)
             
             if self.async_config.detailed_performance_logging:
-                print(f"Async evaluation completed: {eval_time:.2f}s, "
-                      f"API calls: {population_result.total_api_calls}, "
-                      f"Cache hits: {population_result.total_cache_hits}, "
-                      f"Throughput: {population_result.throughput_problems_per_second:.1f} problems/s")
+                print(f"  ⚡ {eval_time:.1f}s | {population_result.total_api_calls} API | "
+                      f"{population_result.total_cache_hits} cache | "
+                      f"{population_result.throughput_problems_per_second:.1f} prob/s")
         else:
             # Fallback to sync evaluation
             evaluation_results = self.evaluation_pipeline.evaluate_adaptive(
@@ -210,7 +213,20 @@ class AsyncEvolutionController(EvolutionController):
             Evolution results dictionary
         """
         max_gens = max_generations or self.config.max_generations
-        
+
+        # Validate population before starting evolution
+        if len(self.population) == 0:
+            error_msg = (
+                "❌ CRITICAL ERROR: Population is empty (0 genomes)!\n"
+                "   This indicates a population initialization failure.\n"
+                "   Troubleshooting:\n"
+                "   1. Check that initialize_population() was called in __init__()\n"
+                "   2. Verify seed_prompts are provided or random initialization works\n"
+                "   3. Check for errors during population creation"
+            )
+            print(error_msg)
+            raise ValueError("Cannot start evolution with empty population")
+
         print(f"🧬 Starting async evolution with {len(self.population)} genomes for {max_gens} generations")
         print(f"📊 Async config: batch_size={self.async_config.async_batch_size}, "
               f"concurrent_requests={self.async_config.max_concurrent_requests}, "
@@ -223,11 +239,9 @@ class AsyncEvolutionController(EvolutionController):
             result = await self.evolve_generation_async()
             
             # Print progress
-            print(f"Generation {result.generation}: "
-                  f"best={result.best_fitness:.3f}, "
-                  f"mean={result.mean_fitness:.3f}, "
-                  f"diversity={result.diversity:.3f}, "
-                  f"eval_time={result.evaluation_time:.2f}s")
+            print(f"Gen {result.generation:2d}: best={result.best_fitness:.3f} | "
+                  f"mean={result.mean_fitness:.3f} | div={result.diversity:.3f} | "
+                  f"{result.evaluation_time:.1f}s")
             
             # Save checkpoint
             if (self.config.save_checkpoints and 

@@ -80,6 +80,11 @@ class AsyncLLMInterface:
         self.failed_requests = 0
         self.total_tokens_used = 0
         self.cache_hits = 0
+
+        # Rate limiting performance tracking
+        self.total_wait_time = 0.0
+        self.rate_limit_hits = 0
+        self.start_time = time.time()
         
         # Rate limiting
         self.request_times = []
@@ -106,10 +111,14 @@ class AsyncLLMInterface:
             
             # Check if we're at the rate limit
             if len(self.request_times) >= self.batch_config.rate_limit_per_minute:
-                # Calculate wait time
+                # Calculate minimal wait time (not full minute)
                 oldest_request = min(self.request_times)
-                wait_time = 60 - (current_time - oldest_request)
+                time_since_oldest = current_time - oldest_request
+                wait_time = max(0, 60 - time_since_oldest + 1)  # Add 1 second buffer
                 if wait_time > 0:
+                    self.rate_limit_hits += 1
+                    self.total_wait_time += wait_time
+                    print(f"Rate limit reached, waiting {wait_time:.1f}s (optimized)")
                     await asyncio.sleep(wait_time)
             
             # Record this request
@@ -344,6 +353,11 @@ class AsyncLLMInterface:
         cache_hit_rate = (self.cache_hits / (self.total_requests + self.cache_hits)
                          if (self.total_requests + self.cache_hits) > 0 else 0.0)
 
+        # Calculate throughput
+        elapsed_time = time.time() - self.start_time
+        throughput = self.total_requests / elapsed_time if elapsed_time > 0 else 0.0
+        avg_wait_time = self.total_wait_time / self.rate_limit_hits if self.rate_limit_hits > 0 else 0.0
+
         return {
             'total_requests': self.total_requests,
             'successful_requests': self.successful_requests,
@@ -352,6 +366,12 @@ class AsyncLLMInterface:
             'total_tokens_used': self.total_tokens_used,
             'cache_hits': self.cache_hits,
             'cache_hit_rate': cache_hit_rate,
+            'throughput_requests_per_second': throughput,
+            'rate_limiting': {
+                'total_wait_time': self.total_wait_time,
+                'rate_limit_hits': self.rate_limit_hits,
+                'average_wait_time': avg_wait_time
+            },
             'batch_config': {
                 'batch_size': self.batch_config.batch_size,
                 'max_concurrent_requests': self.batch_config.max_concurrent_requests,
