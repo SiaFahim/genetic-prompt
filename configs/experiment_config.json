@@ -27,7 +27,12 @@
     "eval_problems_gen21_30": 150,
     "primary_eval_size": 100,
     "validation_size": 100,
-    "final_test_size": 200
+    "final_test_size": 200,
+    "seeds": {
+      "primary_eval": 42,
+      "validation": 43,
+      "final_test": 44
+    }
   },
   "paths": {
     "data_root": "data",
