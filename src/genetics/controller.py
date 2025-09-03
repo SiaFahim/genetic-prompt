@@ -15,15 +15,29 @@ from src.evaluation.evaluator import LLMEvaluator
 def evolve(config_path: str = "configs/experiment_config.json"):
     cfg = load_config(config_path)
 
-    # Data
+    # Resolve project root (directory that contains 'src') to make paths absolute
+    here = os.getcwd()
+    candidates = [here, os.path.dirname(here), os.path.dirname(os.path.dirname(here))]
+    project_root = None
+    for c in candidates:
+        if os.path.exists(os.path.join(c, "src")):
+            project_root = c
+            break
+    if project_root is None:
+        project_root = here
+
+    # Data (absolute paths)
     data_root = cfg.paths.get("data_root", "data")
+    if not os.path.isabs(data_root):
+        data_root = os.path.join(project_root, data_root)
     primary_path = os.path.join(data_root, "gsm8k_primary_eval.jsonl")
     full_val_path = os.path.join(data_root, "gsm8k_validation.jsonl")
     problems = load_jsonl(primary_path)
 
-    # Vocab and neighborhoods
-    token2id_path = os.path.join(data_root, "embeddings", "vocab", "token2id.json")
-    id2token_path = os.path.join(data_root, "embeddings", "vocab", "id2token.json")
+    # Vocab and neighborhoods (absolute paths)
+    embeddings_root = os.path.join(project_root, "data", "embeddings")
+    token2id_path = os.path.join(embeddings_root, "vocab", "token2id.json")
+    id2token_path = os.path.join(embeddings_root, "vocab", "id2token.json")
     import json
     with open(token2id_path, "r") as f:
         token2id = json.load(f)
@@ -31,7 +45,7 @@ def evolve(config_path: str = "configs/experiment_config.json"):
         id2token = {int(k): v for k, v in json.load(f).items()}
 
     neighbors = SemanticNeighbors(
-        neighborhoods_path=os.path.join(data_root, "embeddings", "neighborhoods.pkl"),
+        neighborhoods_path=os.path.join(embeddings_root, "neighborhoods.pkl"),
         token2id_path=token2id_path,
         deterministic=True,
         seed=cfg.random_seed,
