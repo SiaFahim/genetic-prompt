@@ -1,0 +1,327 @@
+{
+  "experiment_name": "My GSM8K Evolution Experiment_1756400341_974f8c48",
+  "total_time": 14480.103379011154,
+  "final_results": {
+    "best_fitness": 0.6316805500597366,
+    "best_genome": "let me use <UNK> to check if my <UNK> calculation is correct",
+    "total_generations": 7,
+    "total_time": 14479.500099182129,
+    "total_evaluations": 350,
+    "convergence_reason": "stagnation",
+    "generation_results": [
+      {
+        "generation": 1,
+        "best_fitness": 0.48619676932224654,
+        "mean_fitness": 0.3206488648703234,
+        "diversity": 0.8950910744584214,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 0,
+          "current_best_fitness": 0.48619676932224654,
+          "diversity_score": 0.8950910744584214,
+          "plateau_length": 0,
+          "details": {}
+        },
+        "evaluation_time": 1713.3414809703827,
+        "evolution_time": 1713.4244601726532,
+        "population_stats": {
+          "generation": 0,
+          "population_size": 50,
+          "diversity": 0.8950910744584214,
+          "best_fitness": 0.48619676932224654,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.3206488648703234,
+            "median": 0.33004192779383135,
+            "std": 0.09542007394823562,
+            "min": 0.08966327051390255,
+            "max": 0.48619676932224654,
+            "range": 0.396533498808344
+          },
+          "length_stats": {
+            "mean_length": 9.88,
+            "min_length": 6,
+            "max_length": 16
+          },
+          "age_stats": {
+            "mean_age": 0,
+            "max_age": 0
+          }
+        }
+      },
+      {
+        "generation": 2,
+        "best_fitness": 0.6316805500597366,
+        "mean_fitness": 0.4948766330509911,
+        "diversity": 0.8859563135277421,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 0,
+          "current_best_fitness": 0.6316805500597366,
+          "diversity_score": 0.8859563135277421,
+          "plateau_length": 0,
+          "details": {}
+        },
+        "evaluation_time": 1517.0998499393463,
+        "evolution_time": 1517.1807608604431,
+        "population_stats": {
+          "generation": 1,
+          "population_size": 50,
+          "diversity": 0.8859563135277421,
+          "best_fitness": 0.6316805500597366,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.4948766330509911,
+            "median": 0.5567283601730882,
+            "std": 0.11299587239849058,
+            "min": 0.14204709733086163,
+            "max": 0.6316805500597366,
+            "range": 0.48963345272887493
+          },
+          "length_stats": {
+            "mean_length": 9.86,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.1,
+            "max_age": 1
+          }
+        }
+      },
+      {
+        "generation": 3,
+        "best_fitness": 0.4918323808592472,
+        "mean_fitness": 0.39678744168216734,
+        "diversity": 0.8826577549434692,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 1,
+          "current_best_fitness": 0.4918323808592472,
+          "diversity_score": 0.8826577549434692,
+          "plateau_length": 1,
+          "details": {}
+        },
+        "evaluation_time": 1492.7918181419373,
+        "evolution_time": 1492.862317085266,
+        "population_stats": {
+          "generation": 2,
+          "population_size": 50,
+          "diversity": 0.8826577549434692,
+          "best_fitness": 0.4918323808592472,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.39678744168216734,
+            "median": 0.40601453828536627,
+            "std": 0.0594330296222061,
+            "min": 0.24665036044686806,
+            "max": 0.4918323808592472,
+            "range": 0.24518202041237913
+          },
+          "length_stats": {
+            "mean_length": 9.1,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.2,
+            "max_age": 2
+          }
+        }
+      },
+      {
+        "generation": 4,
+        "best_fitness": 0.5713517435530961,
+        "mean_fitness": 0.4058084020228546,
+        "diversity": 0.85752195423624,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 2,
+          "current_best_fitness": 0.5713517435530961,
+          "diversity_score": 0.85752195423624,
+          "plateau_length": 0,
+          "details": {}
+        },
+        "evaluation_time": 1597.7334401607513,
+        "evolution_time": 1597.8554980754852,
+        "population_stats": {
+          "generation": 3,
+          "population_size": 50,
+          "diversity": 0.85752195423624,
+          "best_fitness": 0.5713517435530961,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.4058084020228546,
+            "median": 0.42533850970626147,
+            "std": 0.08232696898729483,
+            "min": 0.24407690999134954,
+            "max": 0.5713517435530961,
+            "range": 0.3272748335617466
+          },
+          "length_stats": {
+            "mean_length": 8.94,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.3,
+            "max_age": 3
+          }
+        }
+      },
+      {
+        "generation": 5,
+        "best_fitness": 0.5570355714493811,
+        "mean_fitness": 0.4126975879526278,
+        "diversity": 0.872792635935493,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 3,
+          "current_best_fitness": 0.5570355714493811,
+          "diversity_score": 0.872792635935493,
+          "plateau_length": 1,
+          "details": {}
+        },
+        "evaluation_time": 5301.706574201584,
+        "evolution_time": 5301.8591821193695,
+        "population_stats": {
+          "generation": 4,
+          "population_size": 50,
+          "diversity": 0.872792635935493,
+          "best_fitness": 0.5570355714493811,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.4126975879526278,
+            "median": 0.4156108093974969,
+            "std": 0.07167628541124323,
+            "min": 0.2472519387423356,
+            "max": 0.5570355714493811,
+            "range": 0.3097836327070455
+          },
+          "length_stats": {
+            "mean_length": 9.48,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.4,
+            "max_age": 4
+          }
+        }
+      },
+      {
+        "generation": 6,
+        "best_fitness": 0.4913948036789577,
+        "mean_fitness": 0.4132379048724662,
+        "diversity": 0.8509842855557141,
+        "convergence_status": {
+          "converged": false,
+          "reason": "not_converged",
+          "confidence": 0.0,
+          "generations_since_improvement": 4,
+          "current_best_fitness": 0.4913948036789577,
+          "diversity_score": 0.8509842855557141,
+          "plateau_length": 4,
+          "details": {}
+        },
+        "evaluation_time": 1416.4906361103058,
+        "evolution_time": 1416.644942998886,
+        "population_stats": {
+          "generation": 5,
+          "population_size": 50,
+          "diversity": 0.8509842855557141,
+          "best_fitness": 0.4913948036789577,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.4132379048724662,
+            "median": 0.4113451519219853,
+            "std": 0.05830129235998412,
+            "min": 0.23585415919274222,
+            "max": 0.4913948036789577,
+            "range": 0.2555406444862155
+          },
+          "length_stats": {
+            "mean_length": 9.64,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.5,
+            "max_age": 5
+          }
+        }
+      },
+      {
+        "generation": 6,
+        "best_fitness": 0.5480149631869293,
+        "mean_fitness": 0.4646168442773901,
+        "diversity": 0.8352382696668411,
+        "convergence_status": {
+          "converged": true,
+          "reason": "stagnation",
+          "confidence": 1.0,
+          "generations_since_improvement": 5,
+          "current_best_fitness": 0.5480149631869293,
+          "diversity_score": 0.8352382696668411,
+          "plateau_length": 5,
+          "details": {
+            "stagnation_threshold": 5
+          }
+        },
+        "evaluation_time": 1435.657907962799,
+        "evolution_time": 1435.7272100448608,
+        "population_stats": {
+          "generation": 6,
+          "population_size": 50,
+          "diversity": 0.8352382696668411,
+          "best_fitness": 0.5480149631869293,
+          "fitness_stats": {
+            "count": 50,
+            "mean": 0.4646168442773901,
+            "median": 0.4786564084284822,
+            "std": 0.036603631642895734,
+            "min": 0.3512433848647069,
+            "max": 0.5480149631869293,
+            "range": 0.19677157832222242
+          },
+          "length_stats": {
+            "mean_length": 9.88,
+            "min_length": 6,
+            "max_length": 13
+          },
+          "age_stats": {
+            "mean_age": 0.6,
+            "max_age": 6
+          }
+        }
+      }
+    ],
+    "config": {
+      "population_size": 50,
+      "max_generations": 50,
+      "crossover_rate": 0.8,
+      "mutation_rate": 0.2,
+      "elite_size": 5,
+      "selection_method": "tournament",
+      "tournament_size": 3,
+      "crossover_type": "single_point",
+      "mutation_type": "semantic",
+      "target_fitness": 0.95,
+      "convergence_patience": 5,
+      "adaptive_parameters": true,
+      "save_checkpoints": true,
+      "checkpoint_interval": 5
+    }
+  },
+  "end_time": 1756414821.582593
+}

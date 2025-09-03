@@ -135,6 +135,18 @@ class HyperparameterConfig:
     parallel_evaluation: bool = False
     max_workers: int = 4
     memory_limit_mb: int = 1024
+
+    # Async Evaluation Parameters
+    enable_async_evaluation: bool = True
+    async_batch_size: int = 20
+    max_concurrent_requests: int = 10
+    genome_batch_size: int = 10
+    max_concurrent_genomes: int = 5
+    rate_limit_per_minute: int = 3500
+    async_retry_attempts: int = 3
+    async_base_delay: float = 1.0
+    async_max_delay: float = 60.0
+    async_timeout: int = 30
     
     def __post_init__(self):
         """Validate configuration after initialization."""
@@ -339,6 +351,48 @@ class HyperparameterConfig:
             'memory_limit_mb': ParameterSpec(
                 'memory_limit_mb', 'Memory limit in megabytes',
                 1024, min_value=128, max_value=16384, parameter_type=int, category='performance'
+            ),
+
+            # Async Evaluation Parameters
+            'enable_async_evaluation': ParameterSpec(
+                'enable_async_evaluation', 'Enable asynchronous evaluation pipeline',
+                True, parameter_type=bool, category='async'
+            ),
+            'async_batch_size': ParameterSpec(
+                'async_batch_size', 'Batch size for async problem processing',
+                20, min_value=1, max_value=100, parameter_type=int, category='async'
+            ),
+            'max_concurrent_requests': ParameterSpec(
+                'max_concurrent_requests', 'Maximum concurrent API requests per batch',
+                10, min_value=1, max_value=50, parameter_type=int, category='async'
+            ),
+            'genome_batch_size': ParameterSpec(
+                'genome_batch_size', 'Number of genomes to process concurrently',
+                10, min_value=1, max_value=50, parameter_type=int, category='async'
+            ),
+            'max_concurrent_genomes': ParameterSpec(
+                'max_concurrent_genomes', 'Maximum concurrent genome evaluations',
+                5, min_value=1, max_value=20, parameter_type=int, category='async'
+            ),
+            'rate_limit_per_minute': ParameterSpec(
+                'rate_limit_per_minute', 'API rate limit per minute',
+                3500, min_value=100, max_value=10000, parameter_type=int, category='async'
+            ),
+            'async_retry_attempts': ParameterSpec(
+                'async_retry_attempts', 'Number of retry attempts for failed requests',
+                3, min_value=1, max_value=10, parameter_type=int, category='async'
+            ),
+            'async_base_delay': ParameterSpec(
+                'async_base_delay', 'Base delay for exponential backoff (seconds)',
+                1.0, min_value=0.1, max_value=10.0, parameter_type=float, category='async'
+            ),
+            'async_max_delay': ParameterSpec(
+                'async_max_delay', 'Maximum delay for exponential backoff (seconds)',
+                60.0, min_value=1.0, max_value=300.0, parameter_type=float, category='async'
+            ),
+            'async_timeout': ParameterSpec(
+                'async_timeout', 'Timeout for async API requests (seconds)',
+                30, min_value=5, max_value=120, parameter_type=int, category='async'
             ),
         }
     

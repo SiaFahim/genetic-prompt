@@ -60,6 +60,14 @@ class ExperimentConfig:
     max_problems: int = 100
     use_cache: bool = True
     batch_size: int = 10
+
+    # Async evaluation parameters
+    enable_async_evaluation: bool = True
+    async_batch_size: int = 20
+    max_concurrent_requests: int = 10
+    genome_batch_size: int = 10
+    max_concurrent_genomes: int = 5
+    rate_limit_per_minute: int = 3500
     
     # Seed parameters
     seed_strategy: str = "balanced"  # balanced, diverse, random
