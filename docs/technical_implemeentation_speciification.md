@@ -1,28 +1,25 @@
-# Technical Implementation Specification: GSM8K Genetic Algorithm Prompt Optimization
+Technical Implementation Specification: GSM8K Genetic Algorithm Prompt Optimization
+PHASE 1: Infrastructure Setup and Data Preparation
+Step 1.1: Environment Configuration ✅ DONE
+Objective: Create isolated Python environment with exact dependencies
 
-## PHASE 1: Infrastructure Setup and Data Preparation
+Task 1.1.1: Python Environment ✅ DONE
+Create Python 3.10 virtual environment named gsm8k_ga_env
 
-### Step 1.1: Environment Configuration
-**Objective**: Create isolated Python environment with exact dependencies
+Install exact versions:
 
-#### Task 1.1.1: Python Environment
-- Create Python 3.10 virtual environment named `gsm8k_ga_env`
-- Install exact versions:
-  ```
-  openai==1.12.0
-  datasets==2.16.0
-  numpy==1.24.3
-  gensim==4.3.0
-  nltk==3.8.1
-  tqdm==4.65.0
-  pandas==2.0.3
-  matplotlib==3.7.1
-  jsonlines==3.1.0
-  ```
-
-#### Task 1.1.2: Directory Structure
+openai==1.12.0
+datasets==2.16.0
+numpy==1.24.3
+gensim==4.3.0
+nltk==3.8.1
+tqdm==4.65.0
+pandas==2.0.3
+matplotlib==3.7.1
+jsonlines==3.1.0
+Task 1.1.2: Directory Structure
 Create this exact structure:
-```
+
 gsm8k_ga/
 ├── src/
 │   ├── genetics/
@@ -49,12 +46,10 @@ gsm8k_ga/
 └── scripts/
     ├── run_evolution.py
     └── analyze_results.py
-```
+Step 1.2: Dataset Acquisition and Preprocessing
+Task 1.2.1: Download GSM8K
+Python
 
-### Step 1.2: Dataset Acquisition and Preprocessing
-
-#### Task 1.2.1: Download GSM8K
-```python
 from datasets import load_dataset
 
 # Download and cache locally
@@ -64,24 +59,26 @@ dataset.save_to_disk("./data/gsm8k_raw")
 # Extract splits
 train_set = dataset['train']  # 7,473 problems
 test_set = dataset['test']    # 1,319 problems
-```
+Task 1.2.2: Create Evaluation Subsets
+Primary eval set: Randomly sample 100 problems from test_set with seed=42
 
-#### Task 1.2.2: Create Evaluation Subsets
-- **Primary eval set**: Randomly sample 100 problems from test_set with seed=42
-- **Validation set**: Randomly sample 100 problems from train_set with seed=43
-- **Final test set**: Randomly sample 200 problems from test_set (non-overlapping with primary) with seed=44
-- Save each as JSON files with structure:
-  ```json
-  {
-    "id": "gsm8k_test_0001",
-    "question": "problem text",
-    "answer": "solution with #### marker",
-    "final_answer": 42.0
-  }
-  ```
+Validation set: Randomly sample 100 problems from train_set with seed=43
 
-#### Task 1.2.3: Build Answer Extraction Function
-```python
+Final test set: Randomly sample 200 problems from test_set (non-overlapping with primary) with seed=44
+
+Save each as JSON files with structure:
+
+JSON
+
+{
+  "id": "gsm8k_test_0001",
+  "question": "problem text",
+  "answer": "solution with #### marker",
+  "final_answer": 42.0
+}
+Task 1.2.3: Build Answer Extraction Function
+Python
+
 def extract_final_answer(answer_text):
     """
     Extract numeric answer after #### marker.
@@ -95,17 +92,17 @@ def extract_final_answer(answer_text):
         number_str = match.group(1).replace(',', '')
         return float(number_str)
     return None
-```
+Step 1.3: Semantic Embedding Setup
+Task 1.3.1: Download Word Embeddings
+Download GloVe embeddings: glove.6B.100d.txt (822MB)
 
-### Step 1.3: Semantic Embedding Setup
+Load into memory-mapped numpy array for efficiency
 
-#### Task 1.3.1: Download Word Embeddings
-- Download GloVe embeddings: `glove.6B.100d.txt` (822MB)
-- Load into memory-mapped numpy array for efficiency
-- Create token-to-index mapping dictionary
+Create token-to-index mapping dictionary
 
-#### Task 1.3.2: Build Neighborhood Index
-```python
+Task 1.3.2: Build Neighborhood Index
+Python
+
 def build_semantic_neighborhoods(vocab_size=10000, n_neighbors=50):
     """
     For each token in vocabulary:
@@ -123,14 +120,11 @@ def build_semantic_neighborhoods(vocab_size=10000, n_neighbors=50):
         top_k = numpy.argsort(similarities)[-n_neighbors:]
         neighborhoods[token_id] = top_k.tolist()
     return neighborhoods
-```
+PHASE 2: Core Genetic Algorithm Components
+Step 2.1: Genome Implementation
+Task 2.1.1: Define PromptGenome Class
+Python
 
-## PHASE 2: Core Genetic Algorithm Components
-
-### Step 2.1: Genome Implementation
-
-#### Task 2.1.1: Define PromptGenome Class
-```python
 class PromptGenome:
     def __init__(self, token_ids, max_length=200):
         self.token_ids = token_ids[:max_length]  # List of integers
@@ -149,12 +143,10 @@ class PromptGenome:
     def get_hash(self):
         """Return hash for caching purposes"""
         return hashlib.md5(bytes(self.token_ids)).hexdigest()
-```
+Step 2.2: Genetic Operators
+Task 2.2.1: Crossover Operator
+Python
 
-### Step 2.2: Genetic Operators
-
-#### Task 2.2.1: Crossover Operator
-```python
 def crossover(parent1, parent2, tokenizer):
     """
     1. Convert token_ids to text
@@ -180,10 +172,9 @@ def crossover(parent1, parent2, tokenizer):
     
     offspring_tokens = parent1.token_ids[:point1] + parent2.token_ids[point2:]
     return PromptGenome(offspring_tokens)
-```
+Task 2.2.2: Mutation Operator
+Python
 
-#### Task 2.2.2: Mutation Operator
-```python
 def mutate(genome, neighborhoods, pop_prob=0.8, token_prob=0.002):
     """
     1. Apply population-level mutation with probability pop_prob
@@ -217,12 +208,10 @@ def mutate(genome, neighborhoods, pop_prob=0.8, token_prob=0.002):
         new_genome.mutation_count = mutations_made
         return new_genome
     return genome
-```
+Step 2.3: Population Management
+Task 2.3.1: Initialize Population
+Python
 
-### Step 2.3: Population Management
-
-#### Task 2.3.1: Initialize Population
-```python
 def create_initial_population(seed_prompts, population_size=500):
     """
     seed_prompts: List of 50 PromptGenome objects
@@ -243,27 +232,28 @@ def create_initial_population(seed_prompts, population_size=500):
         offspring.parent_ids = [parent1.genome_id, parent2.genome_id]
         population.append(offspring)
     return population
-```
+PHASE 3: Evaluation System
+Step 3.1: LLM Interface
+Task 3.1.1: API Client Setup
+Python
 
-## PHASE 3: Evaluation System
+import asyncio
+from openai import AsyncOpenAI, RateLimitError
 
-### Step 3.1: LLM Interface
-
-#### Task 3.1.1: API Client Setup
-```python
 class LLMEvaluator:
-    def __init__(self, api_key, model="gpt-4", cache_dir="./data/cache"):
-        self.client = OpenAI(api_key=api_key)
+    def __init__(self, api_key, model="gpt-4o", cache_dir="./data/cache"):
+        # Updated to use AsyncOpenAI for non-blocking API calls
+        self.client = AsyncOpenAI(api_key=api_key)
         self.model = model
         self.cache = DiskCache(cache_dir)
         self.call_count = 0
         self.cache_hits = 0
-        
-    def generate_completion(self, prompt, max_tokens=200, temperature=0):
+
+    async def generate_completion(self, prompt, semaphore, max_tokens=200, temperature=0):
         """
         1. Check cache using MD5 hash of prompt
         2. If cached, return cached response
-        3. If not, make API call with retry logic
+        3. If not, acquire semaphore and make API call with retry logic
         4. Cache response before returning
         """
         cache_key = hashlib.md5(prompt.encode()).hexdigest()
@@ -272,40 +262,39 @@ class LLMEvaluator:
             self.cache_hits += 1
             return self.cache[cache_key]
         
-        # Retry logic with exponential backoff
-        for attempt in range(3):
-            try:
-                response = self.client.completions.create(
-                    model=self.model,
-                    prompt=prompt,
-                    max_tokens=max_tokens,
-                    temperature=temperature
-                )
-                result = response.choices[0].text
-                self.cache[cache_key] = result
-                self.call_count += 1
-                return result
-            except RateLimitError:
-                time.sleep(2 ** attempt)
-        
-        raise Exception("API call failed after 3 attempts")
-```
+        # Acquire semaphore to control concurrency
+        async with semaphore:
+            # Retry logic with exponential backoff
+            for attempt in range(3):
+                try:
+                    # Using await for the async chat completions call
+                    response = await self.client.chat.completions.create(
+                        model=self.model,
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=max_tokens,
+                        temperature=temperature
+                    )
+                    result = response.choices[0].message.content
+                    self.cache[cache_key] = result
+                    self.call_count += 1
+                    return result
+                except RateLimitError:
+                    # Use non-blocking sleep for async context
+                    await asyncio.sleep(2 ** attempt)
+            
+            raise Exception("API call failed after 3 attempts")
 
-### Step 3.2: Fitness Evaluation
+Step 3.2: Fitness Evaluation
+Task 3.2.1: Single Genome Evaluation
+Python
 
-#### Task 3.2.1: Single Genome Evaluation
-```python
-def evaluate_genome(genome, problems, evaluator):
+async def evaluate_genome(genome, problems, evaluator, semaphore):
     """
+    Asynchronously evaluates a single genome.
     1. Convert genome to prompt text
-    2. For each problem in subset:
-       a. Construct full prompt
-       b. Get LLM response
-       c. Extract answer
-       d. Compare with ground truth
-    3. Calculate accuracy
-    4. Apply length penalty
-    5. Return fitness score
+    2. For each problem, get LLM response concurrently (within problem scope)
+    3. Extract answer and compare with ground truth
+    4. Calculate accuracy, apply penalty, and return fitness score
     """
     prompt_text = genome.to_text(tokenizer)
     correct = 0
@@ -313,7 +302,8 @@ def evaluate_genome(genome, problems, evaluator):
     for problem in problems:
         full_prompt = f"{prompt_text}\n\nQuestion: {problem['question']}\nAnswer:"
         
-        response = evaluator.generate_completion(full_prompt)
+        # Await the async completion call
+        response = await evaluator.generate_completion(full_prompt, semaphore)
         predicted = extract_final_answer(response)
         ground_truth = problem['final_answer']
         
@@ -336,42 +326,45 @@ def evaluate_genome(genome, problems, evaluator):
     genome.evaluation_count = len(problems)
     
     return fitness
-```
+Task 3.2.2: Batch Evaluation with Parallelization
+Python
 
-#### Task 3.2.2: Batch Evaluation with Parallelization
-```python
-def evaluate_population(population, problems, evaluator, n_workers=10):
+def evaluate_population(population, problems, evaluator, concurrency_limit=200):
     """
-    1. Create thread pool with n_workers
-    2. Batch population into chunks
-    3. Evaluate in parallel
-    4. Handle failures gracefully
-    5. Return evaluated population
+    Evaluates the entire population concurrently using an asyncio event loop.
+    1. Creates an asyncio Semaphore to limit parallel requests.
+    2. Gathers all evaluation tasks to be run.
+    3. Executes the event loop and waits for all evaluations to complete.
+    4. Handles failures gracefully.
     """
-    from concurrent.futures import ThreadPoolExecutor
-    
-    def eval_wrapper(genome):
-        try:
-            return evaluate_genome(genome, problems, evaluator)
-        except Exception as e:
-            print(f"Evaluation failed for genome {genome.genome_id}: {e}")
-            genome.fitness = 0.0
-            return 0.0
-    
-    with ThreadPoolExecutor(max_workers=n_workers) as executor:
-        futures = [executor.submit(eval_wrapper, g) for g in population]
-        for future in tqdm(futures, desc="Evaluating"):
-            future.result()
+    async def main():
+        # Semaphore limits how many API calls can be active at once
+        semaphore = asyncio.Semaphore(concurrency_limit)
+        
+        async def eval_wrapper(genome):
+            try:
+                # Pass the semaphore down to the evaluation function
+                await evaluate_genome(genome, problems, evaluator, semaphore)
+            except Exception as e:
+                print(f"Evaluation failed for genome {genome.genome_id}: {e}")
+                genome.fitness = 0.0
+        
+        # Create a list of async tasks for the entire population
+        tasks = [eval_wrapper(g) for g in population]
+        
+        # Use tqdm's async-compatible progress bar
+        for f in tqdm.as_completed(tasks, desc="Evaluating Population"):
+            await f
+            
+    # Run the main async function to process the whole batch
+    asyncio.run(main())
     
     return population
-```
+PHASE 4: Selection and Evolution
+Step 4.1: Selection Strategy
+Task 4.1.1: Multi-Objective Selection
+Python
 
-## PHASE 4: Selection and Evolution
-
-### Step 4.1: Selection Strategy
-
-#### Task 4.1.1: Multi-Objective Selection
-```python
 def select_parents(population, n_parents=50):
     """
     Select 50 parents using multiple strategies:
@@ -394,10 +387,9 @@ def select_parents(population, n_parents=50):
     random_selected = random.sample(random_pool, min(15, len(random_pool)))
     
     return elite + diverse + random_selected
-```
+Task 4.1.2: Diversity Measurement
+Python
 
-#### Task 4.1.2: Diversity Measurement
-```python
 def select_diverse_genomes(candidates, reference_set, n=15):
     """
     1. Calculate token overlap between each candidate and reference set
@@ -420,12 +412,10 @@ def select_diverse_genomes(candidates, reference_set, n=15):
     # Sort by diversity score and select top n
     diversity_scores.sort(key=lambda x: x[1], reverse=True)
     return [genome for genome, _ in diversity_scores[:n]]
-```
+Step 4.2: Main Evolution Loop
+Task 4.2.1: Generation Execution
+Python
 
-### Step 4.2: Main Evolution Loop
-
-#### Task 4.2.1: Generation Execution
-```python
 def run_generation(generation_num, population, evaluator, config):
     """
     Execute one complete generation:
@@ -485,10 +475,9 @@ def run_generation(generation_num, population, evaluator, config):
     save_checkpoint(generation_num, new_population, best)
     
     return new_population, False
-```
+Task 4.2.2: Complete Evolution Run
+Python
 
-#### Task 4.2.2: Complete Evolution Run
-```python
 def evolve(config):
     """
     Main evolution loop:
@@ -530,14 +519,11 @@ def evolve(config):
     save_final_results(best, final_accuracy)
     
     return best
-```
+PHASE 5: Monitoring and Checkpointing
+Step 5.1: Logging System
+Task 5.1.1: Metrics Tracking
+Python
 
-## PHASE 5: Monitoring and Checkpointing
-
-### Step 5.1: Logging System
-
-#### Task 5.1.1: Metrics Tracking
-```python
 class ExperimentLogger:
     def __init__(self, log_dir="./data/logs"):
         self.log_dir = log_dir
@@ -566,12 +552,10 @@ class ExperimentLogger:
         
         with jsonlines.open(self.metrics_file, 'a') as writer:
             writer.write(metrics)
-```
+Step 5.2: Checkpoint Management
+Task 5.2.1: Save Checkpoint
+Python
 
-### Step 5.2: Checkpoint Management
-
-#### Task 5.2.1: Save Checkpoint
-```python
 def save_checkpoint(generation, population, best_genome):
     """
     Save complete state for recovery:
@@ -601,14 +585,11 @@ def save_checkpoint(generation, population, best_genome):
     
     with open(f"{checkpoint_dir}/metadata.json", 'w') as f:
         json.dump(metadata, f, indent=2)
-```
+PHASE 6: Seed Prompt Initialization
+Step 6.1: Create Seed Prompts
+Task 6.1.1: Define 50 Seed Prompts
+Python
 
-## PHASE 6: Seed Prompt Initialization
-
-### Step 6.1: Create Seed Prompts
-
-#### Task 6.1.1: Define 50 Seed Prompts
-```python
 SEED_PROMPTS = [
     # Basic Chain-of-Thought
     "Let's solve this step by step.",
@@ -642,14 +623,11 @@ def create_seed_genomes():
         genome.generation_born = -1  # Mark as seed
         seed_genomes.append(genome)
     return seed_genomes
-```
+PHASE 7: Analysis and Comparison
+Step 7.1: Performance Analysis
+Task 7.1.1: Evolution Trajectory Analysis
+Python
 
-## PHASE 7: Analysis and Comparison
-
-### Step 7.1: Performance Analysis
-
-#### Task 7.1.1: Evolution Trajectory Analysis
-```python
 def analyze_evolution():
     """
     1. Load all generation checkpoints
@@ -685,12 +663,10 @@ def analyze_evolution():
     plt.ylabel('Population Diversity')
     
     plt.savefig('./data/results/evolution_curves.png')
-```
+Step 7.2: Baseline Comparison
+Task 7.2.1: Evaluate Against Baselines
+Python
 
-### Step 7.2: Baseline Comparison
-
-#### Task 7.2.1: Evaluate Against Baselines
-```python
 def compare_with_baselines():
     """
     Test evolved prompt against known baselines:
@@ -734,14 +710,11 @@ def compare_with_baselines():
             print(f"Evolved vs {baseline_name}: {evolved_accuracy:.2%} vs {baseline_acc:.2%} (p={p_value:.4f})")
     
     return results
-```
+PHASE 8: Production Deployment
+Step 8.1: Final Validation
+Task 8.1.1: Comprehensive Testing
+Python
 
-## PHASE 8: Production Deployment
-
-### Step 8.1: Final Validation
-
-#### Task 8.1.1: Comprehensive Testing
-```python
 def final_validation():
     """
     1. Test on full GSM8K test set (1,319 problems)
@@ -779,12 +752,10 @@ def final_validation():
     }
     
     return results
-```
+Step 8.2: Result Documentation
+Task 8.2.1: Generate Final Report
+Python
 
-### Step 8.2: Result Documentation
-
-#### Task 8.2.1: Generate Final Report
-```python
 def generate_final_report():
     """
     Create comprehensive report including:
@@ -832,14 +803,11 @@ def generate_final_report():
     generate_markdown_report(report)
     
     return report
-```
+PHASE 9: Error Handling and Recovery
+Step 9.1: Fault Tolerance
+Task 9.1.1: Implement Recovery Mechanisms
+Python
 
-## PHASE 9: Error Handling and Recovery
-
-### Step 9.1: Fault Tolerance
-
-#### Task 9.1.1: Implement Recovery Mechanisms
-```python
 class EvolutionRunner:
     def __init__(self, config):
         self.config = config
@@ -891,40 +859,44 @@ class EvolutionRunner:
                 print("Saving emergency checkpoint")
                 save_emergency_checkpoint(self.current_generation, self.population)
                 raise
-```
+EXECUTION INSTRUCTIONS
+Launch Sequence:
+Setup Phase: 2-4 hours
 
-## EXECUTION INSTRUCTIONS
+Bash
 
-### Launch Sequence:
-1. **Setup Phase**: 2-4 hours
-   ```bash
-   python scripts/setup_environment.py
-   python scripts/download_data.py
-   python scripts/build_neighborhoods.py
-   ```
+python scripts/setup_environment.py
+python scripts/download_data.py
+python scripts/build_neighborhoods.py
+Evolution Phase: 24-48 hours
 
-2. **Evolution Phase**: 24-48 hours
-   ```bash
-   python scripts/run_evolution.py --config configs/experiment_config.json
-   ```
+Bash
 
-3. **Analysis Phase**: 2-3 hours
-   ```bash
-   python scripts/analyze_results.py
-   python scripts/generate_report.py
-   ```
+python scripts/run_evolution.py --config configs/experiment_config.json
+Analysis Phase: 2-3 hours
 
-### Critical Success Parameters:
-- **Population**: 500 genomes per generation
-- **Parents**: 50 selected per generation
-- **Mutation**: population_prob=0.8, token_prob=0.002
-- **Max Length**: 200 tokens
-- **Target**: 85% accuracy on GSM8K
-- **Budget**: $2,000-3,000 total
+Bash
 
-### Convergence Criteria:
-- Accuracy >= 85% OR
-- 30 generations completed OR
-- Fitness improvement < 0.001 for 5 consecutive generations
+python scripts/analyze_results.py
+python scripts/generate_report.py
+Critical Success Parameters:
+Population: 500 genomes per generation
+
+Parents: 50 selected per generation
+
+Mutation: population_prob=0.8, token_prob=0.002
+
+Max Length: 200 tokens
+
+Target: 85% accuracy on GSM8K
+
+Budget: $2,000-3,000 total
+
+Convergence Criteria:
+Accuracy >= 85% OR
+
+30 generations completed OR
+
+Fitness improvement < 0.001 for 5 consecutive generations
 
 This specification provides complete implementation details for every component, leaving no architectural decisions undefined. The system is designed for robustness, efficiency, and reproducibility.
