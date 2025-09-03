@@ -26,6 +26,7 @@ MANIFEST
 
 # Virtual environments
 gsm8k_ga_env/
+.venv/
 venv/
 env/
 ENV/
@@ -43,5 +44,7 @@ Thumbs.db
 # Logs
 *.log
 
-# Cache
+# Cache and data
 .cache/
+data/checkpoints/
+data/results/logs/
