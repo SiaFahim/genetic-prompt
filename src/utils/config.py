@@ -18,6 +18,10 @@ class Config:
         return str(self.raw.get("model", {}).get("provider", "openai"))
 
     @property
+    def random_seed(self) -> int:
+        return int(self.raw.get("random_seed", 42))
+
+    @property
     def model_name(self) -> str:
         return str(self.raw.get("model", {}).get("model_name", "gpt-4o"))
 
