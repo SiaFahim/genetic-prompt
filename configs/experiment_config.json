@@ -1,0 +1,46 @@
+{
+  "experiment_name": "gsm8k_ga_experiment",
+  "random_seed": 42,
+  "model": {
+    "provider": "openai",
+    "model_name": "gpt-4o", 
+    "temperature": 0,
+    "max_tokens": 200
+  },
+  "population": {
+    "population_size": 500,
+    "num_parents": 50,
+    "max_generations": 30,
+    "max_prompt_length": 200
+  },
+  "mutation": {
+    "population_prob": 0.8,
+    "token_prob": 0.002,
+    "initial_token_prob": 0.005,
+    "stagnation_multiplier": 2.0
+  },
+  "evaluation": {
+    "concurrency_limit": 200,
+    "tolerance": 0.001,
+    "eval_problems_gen1_10": 50,
+    "eval_problems_gen11_20": 100,
+    "eval_problems_gen21_30": 150,
+    "primary_eval_size": 100,
+    "validation_size": 100,
+    "final_test_size": 200
+  },
+  "paths": {
+    "data_root": "data",
+    "gsm8k_cache": "data/gsm8k_raw",
+    "checkpoints": "data/checkpoints",
+    "results": "data/results",
+    "embeddings": "data/embeddings",
+    "logs": "data/results/logs"
+  },
+  "api": {
+    "use_env": true,
+    "openai_api_key_var": "OPENAI_API_KEY",
+    "anthropic_api_key_var": "ANTHROPIC_API_KEY"
+  }
+}
+
