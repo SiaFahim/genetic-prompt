@@ -75,7 +75,7 @@ def main():
         g.generation_born = -1
         seeds.append(g)
 
-    population = initialize_population(seeds, 20, neighbors, vocab_size=len(token2id))
+    population = initialize_population(seeds, 20, neighbors, vocab_size=len(token2id), id2token=id2token)
 
     # Mock evaluator
     evaluator = MockEvaluator()

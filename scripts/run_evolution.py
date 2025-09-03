@@ -53,7 +53,7 @@ def main():
         seeds.append(genome)
 
     # Population
-    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id))
+    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
 
     # Evaluator
     api_key = cfg.api_keys.get("openai")
