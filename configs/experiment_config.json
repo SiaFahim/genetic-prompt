@@ -26,7 +26,7 @@
     "stagnation_multiplier": 2.0
   },
   "evaluation": {
-    "concurrency_limit": 200,
+    "concurrency_limit": 5,
     "tolerance": 0.001,
     "eval_problems_gen1_10": 50,
     "eval_problems_gen11_20": 100,
