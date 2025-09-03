@@ -2,6 +2,10 @@
 import argparse
 import json
 import os
+import sys
+
+# Ensure project root is on sys.path for module imports when running as a script
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from src.utils.config import load_config
 from src.utils.data import load_jsonl
