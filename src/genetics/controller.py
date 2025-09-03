@@ -65,15 +65,22 @@ def evolve(config_path: str = "configs/experiment_config.json"):
     api_key = cfg.api_keys.get("openai")
     evaluator = LLMEvaluator(api_key=api_key, model=cfg.model_name)
 
-    # Generation loop (short placeholder: 2 gens)
-    logger = JSONLLogger(cfg.paths.get("logs", "data/results/logs"))
+    # Logger with absolute path
+    logs_dir = cfg.paths.get("logs", "data/results/logs")
+    if not os.path.isabs(logs_dir):
+        logs_dir = os.path.join(project_root, logs_dir)
+    logger = JSONLLogger(logs_dir)
+    print(f"Logging metrics to: {logger.metrics_path}")
 
     max_gens = cfg.raw["population"]["max_generations"]
     recent_best: list[float] = []
     mutation_multiplier = 1.0
     bump_generations_remaining = 0
 
+    print(f"Starting evolution: {max_gens} generations, population size {len(population)}")
+
     for gen in range(max_gens):
+        print(f"\n=== Generation {gen+1}/{max_gens} ===")
         # Adaptive evaluation size based on gen
         if gen < 10:
             eval_size = cfg.raw["evaluation"]["eval_problems_gen1_10"]
@@ -81,6 +88,7 @@ def evolve(config_path: str = "configs/experiment_config.json"):
             eval_size = cfg.raw["evaluation"]["eval_problems_gen11_20"]
         else:
             eval_size = cfg.raw["evaluation"]["eval_problems_gen21_30"]
+        print(f"Evaluating on {eval_size} problems...")
 
         population, done = run_generation(
             gen,
