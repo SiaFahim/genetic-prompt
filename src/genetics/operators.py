@@ -1,27 +1,19 @@
 import random
 from typing import List, Tuple
 
+from nltk.tokenize import sent_tokenize
+import nltk
 try:
-    from nltk.tokenize import sent_tokenize as _nltk_sent_tokenize
-except Exception:
-    _nltk_sent_tokenize = None
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 from src.genetics.genome import PromptGenome
 
 
-def _sentences(text: str) -> List[str]:
-    if _nltk_sent_tokenize is not None:
-        try:
-            return _nltk_sent_tokenize(text)
-        except Exception:
-            pass
-    # Fallback: naive split
-    return [s for s in text.replace("\n", " ").split(".") if s.strip()]
-
-
 def find_sentence_token_boundaries(text: str) -> List[int]:
     # Split into sentences and accumulate token counts as boundaries
-    sentences = _sentences(text)
+    sentences = sent_tokenize(text)
     boundaries = []
     count = 0
     for s in sentences:

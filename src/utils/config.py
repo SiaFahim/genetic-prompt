@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any, Dict
 
 try:
-    from dotenv import load_dotenv  # optional; not pinned but available via python-dotenv
+    from dotenv import load_dotenv  # optional; available via python-dotenv
 except Exception:
     load_dotenv = None
 
@@ -32,10 +32,6 @@ class Config:
     @property
     def evaluation(self) -> Dict[str, Any]:
         return dict(self.raw.get("evaluation", {}))
-
-    @property
-    def random_seed(self) -> int:
-        return int(self.raw.get("random_seed", 42))
 
     @property
     def paths(self) -> Dict[str, str]:

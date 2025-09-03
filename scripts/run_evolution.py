@@ -25,9 +25,17 @@ def load_vocab_maps(root: str = "data/embeddings/vocab"):
 def main():
     p = argparse.ArgumentParser(description="Run GSM8K GA Evolution")
     p.add_argument("--config", default="configs/experiment_config.json")
+    p.add_argument("--gens", type=int, default=1)
+    p.add_argument("--eval_size", type=int, default=20)
+    p.add_argument("--pop", type=int, default=None)
+    p.add_argument("--concurrency", type=int, default=None)
     args = p.parse_args()
 
     cfg = load_config(args.config)
+    if args.concurrency is not None:
+        cfg.raw["evaluation"]["concurrency_limit"] = args.concurrency
+    if args.pop is not None:
+        cfg.raw["population"]["population_size"] = args.pop
 
     # Data
     data_root = cfg.paths.get("data_root", "data")
@@ -53,15 +61,15 @@ def main():
         seeds.append(genome)
 
     # Population
-    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
+    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id))
 
     # Evaluator
     api_key = cfg.api_keys.get("openai")
     evaluator = LLMEvaluator(api_key=api_key, model=cfg.model_name)
 
     # Run a small number of generations as a smoke test
-    for gen in range(1):
-        population, done = run_generation(gen, population, problems[:20], evaluator, cfg.raw, id2token, neighbors, vocab_size=len(token2id))
+    for gen in range(args.gens):
+        population, done = run_generation(gen, population, problems[:args.eval_size], evaluator, cfg.raw, id2token, neighbors, vocab_size=len(token2id))
         if done:
             break
 
