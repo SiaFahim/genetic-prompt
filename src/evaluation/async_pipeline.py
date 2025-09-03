@@ -201,16 +201,25 @@ class AsyncEvaluationPipeline:
         
         if self.population_batch_config.detailed_logging:
             print(f"🧬 Evaluating {len(population.genomes)} genomes in {len(genome_batches)} batches")
+            print(f"📊 Each genome will be tested on {len(problems)} problems")
         
         # Progress tracking
         if self.population_batch_config.enable_progress_bar and progress_callback is None:
             pbar = tqdm(total=len(population.genomes), desc="Evaluating population")
-            
+
             def default_progress(genome_id, current, total, result):
+                # Extract correct count from result
+                correct_count = 0
+                if isinstance(result, dict):
+                    if 'is_correct' in result:
+                        correct_count = 1 if result['is_correct'] else 0
+                    elif 'correct_count' in result:
+                        correct_count = result['correct_count']
+
                 pbar.set_postfix({
-                    'genome': genome_id[:8],
+                    'genome': genome_id[:8] if genome_id else 'unknown',
                     'problem': f"{current}/{total}",
-                    'correct': result.get('is_correct', False) if isinstance(result, dict) else False
+                    'correct': correct_count
                 })
         else:
             default_progress = progress_callback
@@ -249,10 +258,13 @@ class AsyncEvaluationPipeline:
                     
                     # Update genome fitness
                     genome.set_fitness(result.fitness_components.overall_fitness)
-                    
+
                     if self.population_batch_config.enable_progress_bar and progress_callback is None:
                         pbar.update(1)
-                        pbar.set_description(f"Evaluating population (fitness: {result.fitness_components.overall_fitness:.3f})")
+                        # Show accuracy (correct answers) instead of overall fitness
+                        accuracy = result.fitness_components.accuracy
+                        correct_count = int(accuracy * len(problems)) if hasattr(result, 'evaluation_results') else 0
+                        pbar.set_description(f"Gen {population.generation}: {correct_count}/{len(problems)} correct (acc: {accuracy:.3f})")
             
             batch_time = time.time() - batch_start_time
             if self.population_batch_config.detailed_logging and len(genome_batches) > 1:
@@ -260,6 +272,15 @@ class AsyncEvaluationPipeline:
         
         if self.population_batch_config.enable_progress_bar and progress_callback is None:
             pbar.close()
+
+        # Print generation summary
+        if self.population_batch_config.detailed_logging and results:
+            accuracies = [r.fitness_components.accuracy for r in results]
+            best_accuracy = max(accuracies) if accuracies else 0.0
+            mean_accuracy = sum(accuracies) / len(accuracies) if accuracies else 0.0
+            print(f"📈 Generation Summary: Best accuracy: {best_accuracy:.3f}, "
+                  f"Mean accuracy: {mean_accuracy:.3f}, "
+                  f"Evaluated: {successful_evaluations}/{len(population.genomes)} genomes")
         
         total_time = time.time() - start_time
         total_problems_processed = successful_evaluations * len(problems[:self.max_problems])

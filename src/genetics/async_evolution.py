@@ -238,10 +238,15 @@ class AsyncEvolutionController(EvolutionController):
         for generation in range(max_gens):
             result = await self.evolve_generation_async()
             
-            # Print progress
+            # Print progress with more detail
+            best_genome = self.population.get_best_genome()
+            best_accuracy = best_genome.fitness if hasattr(best_genome, 'fitness') else 0.0
+
             print(f"Gen {result.generation:2d}: best={result.best_fitness:.3f} | "
                   f"mean={result.mean_fitness:.3f} | div={result.diversity:.3f} | "
                   f"{result.evaluation_time:.1f}s")
+            print(f"  📊 Best genome accuracy: {best_accuracy:.3f} | "
+                  f"Population size: {len(self.population)} genomes")
             
             # Save checkpoint
             if (self.config.save_checkpoints and 
