@@ -8,6 +8,7 @@ from src.embeddings.semantic_utils import SemanticNeighbors
 from src.genetics.genome import PromptGenome
 from src.genetics.population import initialize_population
 from src.genetics.evolution import run_generation
+from src.utils.logging import JSONLLogger
 from src.evaluation.evaluator import LLMEvaluator
 
 
@@ -52,7 +53,10 @@ def evolve(config_path: str = "configs/experiment_config.json"):
     evaluator = LLMEvaluator(api_key=api_key, model=cfg.model_name)
 
     # Generation loop (short placeholder: 2 gens)
+    logger = JSONLLogger(cfg.paths.get("logs", "data/results/logs"))
+
     max_gens = min(2, cfg.raw["population"]["max_generations"])  # keep small for smoke
+    recent_best: list[float] = []
     for gen in range(max_gens):
         # Adaptive evaluation size based on gen
         if gen < 10:
@@ -71,7 +75,12 @@ def evolve(config_path: str = "configs/experiment_config.json"):
             id2token,
             neighbors,
             vocab_size=len(token2id),
+            logger=logger,
+            recent_best=recent_best,
         )
+        # Track best fitness
+        best = max(population, key=lambda g: g.fitness or 0.0)
+        recent_best.append(best.fitness or 0.0)
         if done:
             break
 

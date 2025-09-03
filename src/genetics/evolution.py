@@ -23,7 +23,7 @@ async def evaluate_population(population: List[PromptGenome], problems: List[dic
     return population
 
 
-def run_generation(gen_num: int, population: List[PromptGenome], problems: List[dict], evaluator: LLMEvaluator, config: dict, id2token, neighbors, vocab_size: int) -> Tuple[List[PromptGenome], bool]:
+def run_generation(gen_num: int, population: List[PromptGenome], problems: List[dict], evaluator: LLMEvaluator, config: dict, id2token, neighbors, vocab_size: int, logger=None, recent_best: List[float]=None) -> Tuple[List[PromptGenome], bool]:
     # Evaluate
     asyncio.run(evaluate_population(population, problems, evaluator, config["evaluation"]["concurrency_limit"], id2token))
 
@@ -31,13 +31,21 @@ def run_generation(gen_num: int, population: List[PromptGenome], problems: List[
     best = max(population, key=lambda x: x.fitness or 0.0)
     avg = sum((g.fitness or 0.0) for g in population) / max(1, len(population))
     print(f"Generation {gen_num}: best_fitness={best.fitness:.4f} best_acc={best.accuracy:.4f} avg_fitness={avg:.4f}")
+    if logger:
+        evaluator_stats = {"cache_hit_rate": evaluator.cache_hits / max(1, evaluator.call_count) if evaluator.call_count else 0.0}
+        logger.log_generation(gen_num, population, evaluator_stats=evaluator_stats)
 
-    # Convergence (use target_accuracy 0.85 default if not provided)
+    # Convergence
     target = config.get("target_accuracy", 0.85)
     if (best.accuracy or 0.0) >= target:
         print("Converged by accuracy target")
-        save_checkpoint(gen_num, population, best, dir_root=config["paths"]["checkpoints"]) 
+        save_checkpoint(gen_num, population, best, dir_root=config["paths"]["checkpoints"])
         return population, True
+
+    # Stagnation detection (last 5 gens, improvement < 0.1%)
+    if recent_best is not None and len(recent_best) >= 5:
+        if max(recent_best[-5:]) - min(recent_best[-5:]) < 0.001:
+            print("Stagnation detected - consider increasing mutation rates externally")
 
     # Selection
     sel_cfg = config.get("selection", {})
