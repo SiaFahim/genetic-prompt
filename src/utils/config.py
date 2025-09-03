@@ -34,6 +34,10 @@ class Config:
         return dict(self.raw.get("evaluation", {}))
 
     @property
+    def random_seed(self) -> int:
+        return int(self.raw.get("random_seed", 42))
+
+    @property
     def paths(self) -> Dict[str, str]:
         return dict(self.raw.get("paths", {}))
 
