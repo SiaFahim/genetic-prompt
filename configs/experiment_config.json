@@ -8,7 +8,7 @@
     "max_tokens": 200
   },
   "population": {
-    "population_size": 500,
+    "population_size": 50,
     "num_parents": 50,
     "max_generations": 30,
     "max_prompt_length": 200
