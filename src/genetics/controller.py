@@ -59,7 +59,7 @@ def evolve(config_path: str = "configs/experiment_config.json"):
         g.generation_born = -1
         seeds.append(g)
 
-    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id))
+    population = initialize_population(seeds, cfg.raw["population"]["population_size"], neighbors, vocab_size=len(token2id), id2token=id2token)
 
     # Evaluator
     api_key = cfg.api_keys.get("openai")
