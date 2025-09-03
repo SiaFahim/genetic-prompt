@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import sys
+
+# Ensure project root is on sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.embeddings.neighborhoods import build_neighborhoods
 
 
