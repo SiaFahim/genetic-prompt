@@ -32,8 +32,11 @@ def run_generation(gen_num: int, population: List[PromptGenome], problems: List[
     avg = sum((g.fitness or 0.0) for g in population) / max(1, len(population))
     print(f"Generation {gen_num}: best_fitness={best.fitness:.4f} best_acc={best.accuracy:.4f} avg_fitness={avg:.4f}")
     if logger:
-        evaluator_stats = {"cache_hit_rate": evaluator.cache_hits / max(1, evaluator.call_count) if evaluator.call_count else 0.0}
-        logger.log_generation(gen_num, population, evaluator_stats=evaluator_stats)
+        evaluator_stats = {
+            "cache_hit_rate": evaluator.cache_hits / max(1, evaluator.call_count) if evaluator.call_count else 0.0,
+            "api_calls": evaluator.call_count,
+        }
+        logger.log_generation(gen_num, population, evaluator_stats=evaluator_stats, id2token=id2token)
 
     # Convergence
     target = config.get("target_accuracy", 0.85)

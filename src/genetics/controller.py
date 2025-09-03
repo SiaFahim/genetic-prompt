@@ -37,11 +37,10 @@ def evolve(config_path: str = "configs/experiment_config.json"):
         seed=cfg.random_seed,
     )
 
-    # Seeds: simple seeds from top tokens
+    # Seeds: curated prompts
+    from src.genetics.seeds import SEED_PROMPTS
     seeds: List[PromptGenome] = []
-    top_tokens = list(token2id.keys())[:50]
-    for i in range(50):
-        text = " ".join(top_tokens[max(0, i-5): i+5]) or "let's think step by step"
+    for text in SEED_PROMPTS:
         g = PromptGenome.from_text(text, token2id)
         g.generation_born = -1
         seeds.append(g)
@@ -55,7 +54,7 @@ def evolve(config_path: str = "configs/experiment_config.json"):
     # Generation loop (short placeholder: 2 gens)
     logger = JSONLLogger(cfg.paths.get("logs", "data/results/logs"))
 
-    max_gens = min(2, cfg.raw["population"]["max_generations"])  # keep small for smoke
+    max_gens = cfg.raw["population"]["max_generations"]
     recent_best: list[float] = []
     mutation_multiplier = 1.0
     bump_generations_remaining = 0
