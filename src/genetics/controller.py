@@ -57,6 +57,9 @@ def evolve(config_path: str = "configs/experiment_config.json"):
 
     max_gens = min(2, cfg.raw["population"]["max_generations"])  # keep small for smoke
     recent_best: list[float] = []
+    mutation_multiplier = 1.0
+    bump_generations_remaining = 0
+
     for gen in range(max_gens):
         # Adaptive evaluation size based on gen
         if gen < 10:
@@ -77,10 +80,23 @@ def evolve(config_path: str = "configs/experiment_config.json"):
             vocab_size=len(token2id),
             logger=logger,
             recent_best=recent_best,
+            mutation_multiplier=mutation_multiplier,
         )
         # Track best fitness
         best = max(population, key=lambda g: g.fitness or 0.0)
         recent_best.append(best.fitness or 0.0)
+
+        # Handle stagnation: if last 5 gens tiny improvement, bump mutation for 2 next gens
+        if len(recent_best) >= 5 and max(recent_best[-5:]) - min(recent_best[-5:]) < 0.001:
+            if bump_generations_remaining == 0:
+                print("Stagnation detected: temporarily doubling mutation rate for next 2 generations")
+                mutation_multiplier = 2.0
+                bump_generations_remaining = 2
+        if bump_generations_remaining > 0:
+            bump_generations_remaining -= 1
+            if bump_generations_remaining == 0:
+                mutation_multiplier = 1.0
+
         if done:
             break
 

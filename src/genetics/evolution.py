@@ -23,7 +23,7 @@ async def evaluate_population(population: List[PromptGenome], problems: List[dic
     return population
 
 
-def run_generation(gen_num: int, population: List[PromptGenome], problems: List[dict], evaluator: LLMEvaluator, config: dict, id2token, neighbors, vocab_size: int, logger=None, recent_best: List[float]=None) -> Tuple[List[PromptGenome], bool]:
+def run_generation(gen_num: int, population: List[PromptGenome], problems: List[dict], evaluator: LLMEvaluator, config: dict, id2token, neighbors, vocab_size: int, logger=None, recent_best: List[float]=None, mutation_multiplier: float = 1.0) -> Tuple[List[PromptGenome], bool]:
     # Evaluate
     asyncio.run(evaluate_population(population, problems, evaluator, config["evaluation"]["concurrency_limit"], id2token))
 
@@ -57,7 +57,13 @@ def run_generation(gen_num: int, population: List[PromptGenome], problems: List[
         p1 = random.choice(parents)
         p2 = random.choice(parents)
         child = crossover(p1, p2, id2token=id2token, token2id=None)
-        child = mutate(child, neighbors, vocab_size, pop_prob=config["mutation"]["population_prob"], token_prob=config["mutation"]["token_prob"])
+        child = mutate(
+            child,
+            neighbors,
+            vocab_size,
+            pop_prob=config["mutation"]["population_prob"],
+            token_prob=config["mutation"]["token_prob"] * mutation_multiplier,
+        )
         child.generation_born = gen_num + 1
         child.parent_ids = [p1.genome_id, p2.genome_id]
         new_population.append(child)
