@@ -172,8 +172,9 @@ Set up monitoring for production use of the evolved prompt. Track accuracy on re
 ---
 ## CRITICAL IMPLEMENTATION NOTES
 
-### Resource Requirements
-Ensure you have sufficient computational resources including at least 16GB RAM for holding populations in memory, 50GB disk space for checkpoints and cache, stable internet connection for API calls, and budget approval for $2,000-3,000 in API costs.
+### Main Inteerface
+- Create a jupyter notebook to run the entire pipeline with dynamic visualization of results.
+- All parameters and hyperparameeters of the evolutionary process should be configurable through a single config file.
 
 ### Quality Assurance
 Throughout implementation, maintain code quality by writing comprehensive docstrings for all functions, implementing unit tests for critical components, using type hints for better code clarity, following PEP 8 style guidelines, and conducting code reviews before major milestones.
@@ -183,5 +184,3 @@ Implement safeguards against common failure modes including API rate limit handl
 
 ### Performance Optimization
 Optimize performance through aggressive caching of API responses, **fully concurrent evaluation of the entire population using `asyncio` for efficient non-blocking I/O**, efficient data structures for genome storage, and incremental metric calculation to avoid redundant computation.
-
-This completes the detailed implementation instructions. Each task should be completed in sequence, with careful attention to the specifications in the referenced technical documentation. The system should achieve 95% or better accuracy on GSM8K within 30 generations.
