@@ -95,9 +95,18 @@ class AsyncEvaluator:
                 self.evaluation_stats['total_evaluations']
             )
         
-        # Call progress callback if provided
-        if progress_callback:
-            progress_callback(genome, accuracy, correct_count, total_count)
+        # Call progress callback if provided (for individual genome evaluation)
+        if progress_callback and hasattr(progress_callback, '__call__'):
+            try:
+                # Try to call with just the genome (most common case)
+                progress_callback(genome)
+            except TypeError:
+                # If that fails, try with all parameters
+                try:
+                    progress_callback(genome, accuracy, correct_count, total_count)
+                except TypeError:
+                    # If still fails, skip the callback
+                    pass
         
         evaluation_result = {
             'genome_id': genome.genome_id,
@@ -120,7 +129,8 @@ class AsyncEvaluator:
     async def evaluate_population(self, population: List[PromptGenome],
                                 problems: List[Dict[str, Any]],
                                 show_progress: bool = True,
-                                progress_callback: Optional[Callable] = None) -> List[Dict[str, Any]]:
+                                progress_callback: Optional[Callable] = None,
+                                generation: int = 0) -> List[Dict[str, Any]]:
         """
         Evaluate an entire population on problems.
         
@@ -149,7 +159,8 @@ class AsyncEvaluator:
         
         # Execute with progress bar
         if show_progress:
-            results = await tqdm.gather(*tasks, desc="Evaluating population")
+            desc = f"Gen {generation}: Evaluating {len(population)} genomes on {len(problems)} problems"
+            results = await tqdm.gather(*tasks, desc=desc, unit="genome")
         else:
             results = await asyncio.gather(*tasks)
         
@@ -196,7 +207,7 @@ class AsyncEvaluator:
         
         logger.info(f"Generation {generation}: Using {len(selected_problems)} problems for evaluation")
         
-        return await self.evaluate_population(population, selected_problems, show_progress)
+        return await self.evaluate_population(population, selected_problems, show_progress, generation=generation)
     
     async def evaluate_single_genome(self, genome: PromptGenome,
                                    problems: List[Dict[str, Any]]) -> float:

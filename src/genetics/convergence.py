@@ -30,6 +30,10 @@ class ConvergenceDetector:
         self.stagnation_generations = ga_config.get('stagnation_generations', 5)
         self.stagnation_improvement_threshold = ga_config.get('stagnation_improvement_threshold', 0.001)
         self.target_accuracy = self.config.get('experiment.target_accuracy', 0.95)
+
+        # Convergence requires sustained performance over multiple generations
+        self.convergence_patience = ga_config.get('convergence_patience', 3)  # Require 3 consecutive generations above target
+        self.consecutive_high_accuracy_count = 0
         
         # Tracking
         self.fitness_history = []
@@ -86,15 +90,29 @@ class ConvergenceDetector:
     def _check_convergence(self, best_accuracy: float) -> None:
         """
         Check if algorithm has converged based on accuracy threshold.
-        
+        Requires sustained high performance over multiple generations.
+
         Args:
             best_accuracy: Best accuracy in current generation
         """
-        if not self.is_converged and best_accuracy >= self.target_accuracy:
-            self.is_converged = True
-            self.convergence_generation = self.generation_count
-            logger.info(f"Convergence achieved at generation {self.generation_count}! "
-                       f"Best accuracy: {best_accuracy:.4f}")
+        if not self.is_converged:
+            if best_accuracy >= self.target_accuracy:
+                self.consecutive_high_accuracy_count += 1
+                logger.debug(f"High accuracy achieved: {best_accuracy:.4f} "
+                           f"({self.consecutive_high_accuracy_count}/{self.convergence_patience} consecutive)")
+
+                if self.consecutive_high_accuracy_count >= self.convergence_patience:
+                    self.is_converged = True
+                    self.convergence_generation = self.generation_count - self.convergence_patience + 1
+                    logger.info(f"Convergence achieved! Sustained {best_accuracy:.4f} accuracy "
+                               f"for {self.convergence_patience} consecutive generations "
+                               f"(starting at generation {self.convergence_generation})")
+            else:
+                # Reset counter if accuracy drops below target
+                if self.consecutive_high_accuracy_count > 0:
+                    logger.debug(f"Accuracy dropped below target: {best_accuracy:.4f} < {self.target_accuracy:.4f}. "
+                               f"Resetting convergence counter.")
+                self.consecutive_high_accuracy_count = 0
     
     def _check_stagnation(self) -> None:
         """Check if algorithm has stagnated based on fitness improvement."""
@@ -274,7 +292,8 @@ class ConvergenceDetector:
         self.is_stagnant = False
         self.convergence_generation = None
         self.stagnation_start_generation = None
-        
+        self.consecutive_high_accuracy_count = 0
+
         logger.info("Convergence detector reset")
     
     def save_history(self, filepath: str) -> None:

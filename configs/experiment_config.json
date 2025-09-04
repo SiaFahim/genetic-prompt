@@ -17,6 +17,7 @@
     "num_parents": 50,
     "max_generations": 20,
     "convergence_threshold": 0.85,
+    "convergence_patience": 3,
     "stagnation_generations": 5,
     "stagnation_improvement_threshold": 0.001
   },

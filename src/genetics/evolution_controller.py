@@ -122,10 +122,17 @@ class EvolutionController:
         # Selection
         logger.info("Selecting parents...")
         parents = self.selection_operator.select_parents(self.current_population)
-        
+
         if len(parents) < 2:
             logger.error("Insufficient parents selected")
             raise ValueError("Need at least 2 parents for reproduction")
+
+        # Log selection statistics
+        selection_stats = self.selection_operator.get_selection_statistics()
+        logger.info(f"Selected {len(parents)} parents: "
+                   f"{selection_stats.get('elite_selections', 0)} elite, "
+                   f"{selection_stats.get('diverse_selections', 0)} diverse, "
+                   f"{selection_stats.get('random_selections', 0)} random")
         
         # Generate offspring through crossover and mutation
         logger.info("Generating offspring...")
@@ -162,8 +169,13 @@ class EvolutionController:
         
         # Trim offspring to exact size needed
         offspring = offspring[:offspring_needed]
-        
-        logger.info(f"Generated {len(offspring)} offspring")
+
+        # Log genetic operations statistics
+        mutation_stats = self.mutation_operator.get_mutation_statistics()
+        logger.info(f"Generated {len(offspring)} offspring through {self.evolution_stats['total_crossovers']} crossovers")
+        logger.info(f"Applied {mutation_stats.get('total_mutations', 0)} mutations "
+                   f"({mutation_stats.get('semantic_rate', 0):.1%} semantic, "
+                   f"{mutation_stats.get('random_rate', 0):.1%} random)")
         
         # Evaluate offspring
         logger.info("Evaluating offspring...")
@@ -188,7 +200,7 @@ class EvolutionController:
         # Update convergence detector
         self.convergence_detector.update(survivors, self.current_generation)
         
-        # Track best genome
+        # Track best genome and calculate population diversity
         best_genome = self._get_best_genome(survivors)
         if best_genome:
             self.best_genome_history.append({
@@ -197,6 +209,17 @@ class EvolutionController:
                 'fitness': best_genome.fitness,
                 'accuracy': best_genome.accuracy
             })
+
+        # Calculate and log population diversity
+        evaluated_survivors = [g for g in survivors if g.fitness is not None]
+        if len(evaluated_survivors) > 1:
+            fitnesses = [g.fitness for g in evaluated_survivors]
+            mean_fitness = sum(fitnesses) / len(fitnesses)
+            fitness_std = (sum((f - mean_fitness) ** 2 for f in fitnesses) / len(fitnesses)) ** 0.5
+            fitness_range = max(fitnesses) - min(fitnesses)
+
+            logger.info(f"Population diversity: fitness_std={fitness_std:.4f}, "
+                       f"fitness_range={fitness_range:.4f}, mean_fitness={mean_fitness:.4f}")
         
         # Calculate generation statistics
         generation_time = time.time() - generation_start_time

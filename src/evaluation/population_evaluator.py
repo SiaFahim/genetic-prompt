@@ -125,7 +125,7 @@ class PopulationEvaluator:
         new_results = {}
         if uncached_genomes:
             evaluation_results = await self.async_evaluator.evaluate_population(
-                uncached_genomes, problems, show_progress, progress_callback
+                uncached_genomes, problems, show_progress, progress_callback, generation
             )
             
             # Cache new results
