@@ -9,7 +9,7 @@
     "name": "gpt-4",
     "provider": "openai",
     "temperature": 0,
-    "max_tokens": 300,
+    "max_tokens": 200,
     "timeout": 30
   },
   "genetic_algorithm": {
@@ -41,12 +41,12 @@
     "random_count": 1
   },
   "genome": {
-    "max_length": 300,
-    "length_penalty_threshold": 300,
+    "max_length": 200,
+    "length_penalty_threshold": 200,
     "max_length_penalty": 0.1
   },
   "evaluation": {
-    "concurrency_limit": 300,
+    "concurrency_limit": 200,
     "cache_enabled": true,
     "progressive_evaluation": {
       "early_generations": {
