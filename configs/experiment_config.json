@@ -9,7 +9,7 @@
     "name": "gpt-4o",
     "provider": "openai",
     "temperature": 0,
-    "max_tokens": 200,
+    "max_tokens": 500,
     "timeout": 30
   },
   "genetic_algorithm": {
@@ -36,25 +36,25 @@
     "random_count": 1
   },
   "genome": {
-    "max_length": 200,
-    "length_penalty_threshold": 200,
+    "max_length": 500,
+    "length_penalty_threshold": 500,
     "max_length_penalty": 0.1
   },
   "evaluation": {
-    "concurrency_limit": 200,
+    "concurrency_limit": 500,
     "cache_enabled": true,
     "progressive_evaluation": {
       "early_generations": {
         "range": [1, 10],
-        "problems_per_genome": 50
+        "problems_per_genome": 10
       },
       "middle_generations": {
         "range": [11, 20],
-        "problems_per_genome": 100
+        "problems_per_genome": 20
       },
       "late_generations": {
         "range": [21, 30],
-        "problems_per_genome": 150
+        "problems_per_genome": 30
       }
     }
   },
