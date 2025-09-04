@@ -132,30 +132,33 @@ class EvolutionController:
         offspring = []
         
         # Calculate number of offspring needed
-        offspring_needed = self.population_size - len(parents)
-        
-        while len(offspring) < offspring_needed:
-            # Select two parents randomly
-            import random
-            parent1 = random.choice(parents)
-            parent2 = random.choice(parents)
-            
-            # Ensure different parents
-            if parent1.genome_id == parent2.genome_id and len(parents) > 1:
-                continue
-            
-            # Crossover
-            child1, child2 = self.crossover_operator.crossover(parent1, parent2)
-            
-            # Mutation
-            is_stagnant = self.convergence_detector.is_stagnant
-            child1 = self.mutation_operator.mutate_genome(child1, is_stagnant)
-            child2 = self.mutation_operator.mutate_genome(child2, is_stagnant)
-            
-            offspring.extend([child1, child2])
-            
-            # Update statistics
-            self.evolution_stats['total_crossovers'] += 1
+        offspring_needed = max(0, self.population_size - len(parents))
+
+        if offspring_needed > 0 and len(parents) >= 2:
+            while len(offspring) < offspring_needed:
+                # Select two parents randomly
+                import random
+                parent1 = random.choice(parents)
+                parent2 = random.choice(parents)
+
+                # Ensure different parents if possible
+                attempts = 0
+                while parent1.genome_id == parent2.genome_id and len(parents) > 1 and attempts < 10:
+                    parent2 = random.choice(parents)
+                    attempts += 1
+
+                # Crossover
+                child1, child2 = self.crossover_operator.crossover(parent1, parent2)
+
+                # Mutation
+                is_stagnant = self.convergence_detector.is_stagnant
+                child1 = self.mutation_operator.mutate_genome(child1, is_stagnant)
+                child2 = self.mutation_operator.mutate_genome(child2, is_stagnant)
+
+                offspring.extend([child1, child2])
+
+                # Update statistics
+                self.evolution_stats['total_crossovers'] += 1
         
         # Trim offspring to exact size needed
         offspring = offspring[:offspring_needed]

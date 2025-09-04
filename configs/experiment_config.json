@@ -32,8 +32,8 @@
   },
   "selection": {
     "elite_count": 20,
-    "diverse_count": 15,
-    "random_count": 15
+    "diverse_count": 1,
+    "random_count": 1
   },
   "genome": {
     "max_length": 200,
