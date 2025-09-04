@@ -1,0 +1,109 @@
+{
+  "experiment": {
+    "name": "GSM8K_Genetic_Algorithm_Prompt_Optimization",
+    "description": "Evolve optimal prompts for GSM8K math problems using genetic algorithms",
+    "target_accuracy": 0.95,
+    "random_seed": 42
+  },
+  "model": {
+    "name": "gpt-4o",
+    "provider": "openai",
+    "temperature": 0,
+    "max_tokens": 200,
+    "timeout": 30
+  },
+  "genetic_algorithm": {
+    "population_size": 500,
+    "num_parents": 50,
+    "max_generations": 30,
+    "convergence_threshold": 0.85,
+    "stagnation_generations": 5,
+    "stagnation_improvement_threshold": 0.001
+  },
+  "mutation": {
+    "population_mutation_prob": 0.8,
+    "token_mutation_prob": 0.002,
+    "semantic_neighbor_prob": 0.9,
+    "stagnation_mutation_multiplier": 2.0
+  },
+  "crossover": {
+    "boundary_offset_range": 5,
+    "fallback_to_midpoint": true
+  },
+  "selection": {
+    "elite_count": 20,
+    "diverse_count": 15,
+    "random_count": 15
+  },
+  "genome": {
+    "max_length": 200,
+    "length_penalty_threshold": 200,
+    "max_length_penalty": 0.1
+  },
+  "evaluation": {
+    "concurrency_limit": 200,
+    "cache_enabled": true,
+    "progressive_evaluation": {
+      "early_generations": {
+        "range": [1, 10],
+        "problems_per_genome": 50
+      },
+      "middle_generations": {
+        "range": [11, 20],
+        "problems_per_genome": 100
+      },
+      "late_generations": {
+        "range": [21, 30],
+        "problems_per_genome": 150
+      }
+    }
+  },
+  "dataset": {
+    "name": "openai/gsm8k",
+    "split": "main",
+    "evaluation_sets": {
+      "primary": {
+        "size": 100,
+        "source": "test",
+        "seed": 42
+      },
+      "validation": {
+        "size": 100,
+        "source": "train",
+        "seed": 43
+      },
+      "final_test": {
+        "size": 200,
+        "source": "test",
+        "seed": 44
+      }
+    }
+  },
+  "embeddings": {
+    "model": "glove-wiki-gigaword-100",
+    "vocab_size": 10000,
+    "neighborhood_size": 50,
+    "fallback_enabled": true
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file_enabled": true,
+    "console_enabled": true
+  },
+  "checkpointing": {
+    "enabled": true,
+    "frequency": 1,
+    "keep_all": true,
+    "compression": false
+  },
+  "paths": {
+    "data_dir": "./data",
+    "cache_dir": "./data/cache",
+    "logs_dir": "./data/logs",
+    "checkpoints_dir": "./data/checkpoints",
+    "results_dir": "./data/results",
+    "seeds_dir": "./data/seeds",
+    "embeddings_dir": "./data/embeddings"
+  }
+}
