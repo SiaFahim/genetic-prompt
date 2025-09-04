@@ -12,6 +12,7 @@ import logging
 from src.genetics.genome import PromptGenome
 from src.genetics.crossover import CrossoverOperator
 from src.genetics.mutation import MutationOperator
+from src.genetics.random_seeds import RandomSeedGenerator
 from src.utils.config import get_config
 
 logger = logging.getLogger(__name__)
@@ -30,25 +31,35 @@ class PopulationInitializer:
         self.config = get_config(config_path)
         self.crossover_op = CrossoverOperator(config_path)
         self.mutation_op = MutationOperator(config_path)
-        
+        self.random_seed_generator = RandomSeedGenerator(config_path)
+
         # Configuration
         self.population_size = self.config.get('genetic_algorithm.population_size', 500)
         self.random_seed = self.config.get('experiment.random_seed', 42)
-        
+
+        # Random seed configuration
+        self.use_random_seed_prompts = self.config.get('genetic_algorithm.use_random_seed_prompts', False)
+
         # Paths
         self.seeds_dir = Path(self.config.get('paths.seeds_dir', './data/seeds'))
         self.seeds_dir.mkdir(parents=True, exist_ok=True)
     
     def load_seed_prompts(self, seed_file: Optional[str] = None) -> List[str]:
         """
-        Load seed prompts from file or return default prompts.
-        
+        Load seed prompts from file, generate random seeds, or return default prompts.
+
         Args:
             seed_file: Optional path to seed file
-            
+
         Returns:
             List of seed prompt strings
         """
+        # Check if random seed prompts are enabled
+        if self.use_random_seed_prompts:
+            logger.info("Using random seed prompts (pure randomness initialization)")
+            return self.random_seed_generator.generate_random_seed_prompts()
+
+        # Load from file if specified
         if seed_file and Path(seed_file).exists():
             try:
                 with open(seed_file, 'r') as f:
@@ -57,7 +68,7 @@ class PopulationInitializer:
                 return seeds
             except Exception as e:
                 logger.warning(f"Failed to load seed file {seed_file}: {e}")
-        
+
         # Default seed prompts for GSM8K math problems
         default_seeds = [
             "Solve this step by step.",

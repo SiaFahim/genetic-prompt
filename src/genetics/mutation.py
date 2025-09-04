@@ -33,6 +33,13 @@ class MutationOperator:
         self.token_mutation_prob = self.config.get('mutation.token_mutation_prob', 0.002)
         self.semantic_neighbor_prob = self.config.get('mutation.semantic_neighbor_prob', 0.9)
         self.stagnation_multiplier = self.config.get('mutation.stagnation_mutation_multiplier', 2.0)
+
+        # Random seed and semantic mutation control
+        self.use_random_seed_prompts = self.config.get('genetic_algorithm.use_random_seed_prompts', False)
+        self.force_disable_semantic_mutation = self.config.get('genetic_algorithm.force_disable_semantic_mutation', False)
+
+        # Determine if semantic mutation should be disabled
+        self.semantic_mutation_disabled = self._should_disable_semantic_mutation()
         
         # Tracking
         self.mutation_stats = {
@@ -41,6 +48,34 @@ class MutationOperator:
             'random_mutations': 0,
             'genomes_mutated': 0
         }
+
+        # Log semantic mutation status
+        if self.semantic_mutation_disabled:
+            logger.info("Semantic mutation DISABLED - using pure random mutations only")
+            if self.use_random_seed_prompts:
+                logger.info("  Reason: Random seed prompts enabled (automatic)")
+            if self.force_disable_semantic_mutation:
+                logger.info("  Reason: Manual override (force_disable_semantic_mutation=true)")
+        else:
+            logger.info(f"Semantic mutation ENABLED - semantic_prob={self.semantic_neighbor_prob}")
+
+    def _should_disable_semantic_mutation(self) -> bool:
+        """
+        Determine if semantic mutation should be disabled based on configuration.
+
+        Returns:
+            True if semantic mutation should be disabled
+        """
+        # Automatic disabling: if random seed prompts are used
+        if self.use_random_seed_prompts:
+            return True
+
+        # Manual override: force disable regardless of seed type
+        if self.force_disable_semantic_mutation:
+            return True
+
+        # Default: semantic mutation enabled
+        return False
     
     def should_mutate_genome(self, is_stagnant: bool = False) -> bool:
         """
@@ -88,10 +123,15 @@ class MutationOperator:
         for i, token in enumerate(mutated_genome.tokens):
             if random.random() < token_prob:
                 # Mutate this token
-                new_token = self.semantic_mutator.mutate_word(
-                    token, 
-                    semantic_prob=self.semantic_neighbor_prob
-                )
+                if self.semantic_mutation_disabled:
+                    # Pure random mutation - no semantic neighborhoods
+                    new_token = self.semantic_mutator.mutate_word(token, semantic_prob=0.0)
+                else:
+                    # Normal semantic mutation
+                    new_token = self.semantic_mutator.mutate_word(
+                        token,
+                        semantic_prob=self.semantic_neighbor_prob
+                    )
                 
                 if new_token != token:
                     mutated_genome.tokens[i] = new_token
@@ -165,7 +205,12 @@ class MutationOperator:
         for pos in target_positions:
             if 0 <= pos < len(mutated_genome.tokens):
                 original_token = mutated_genome.tokens[pos]
-                new_token = self.semantic_mutator.mutate_word(original_token, semantic_prob)
+                if self.semantic_mutation_disabled:
+                    # Pure random mutation - no semantic neighborhoods
+                    new_token = self.semantic_mutator.mutate_word(original_token, semantic_prob=0.0)
+                else:
+                    # Normal semantic mutation
+                    new_token = self.semantic_mutator.mutate_word(original_token, semantic_prob)
 
                 if new_token != original_token:
                     mutated_genome.tokens[pos] = new_token
@@ -220,7 +265,12 @@ class MutationOperator:
 
         for i, token in enumerate(mutated_genome.tokens):
             if random.random() < effective_token_prob:
-                new_token = self.semantic_mutator.mutate_word(token, self.semantic_neighbor_prob)
+                if self.semantic_mutation_disabled:
+                    # Pure random mutation - no semantic neighborhoods
+                    new_token = self.semantic_mutator.mutate_word(token, semantic_prob=0.0)
+                else:
+                    # Normal semantic mutation
+                    new_token = self.semantic_mutator.mutate_word(token, self.semantic_neighbor_prob)
                 if new_token != token:
                     mutated_genome.tokens[i] = new_token
                     mutations_made += 1
@@ -235,14 +285,24 @@ class MutationOperator:
         return mutated_genome
 
     def get_mutation_statistics(self) -> Dict[str, Any]:
-        """Get mutation statistics."""
-        total_mutations = self.mutation_stats['total_mutations']
+        """
+        Get comprehensive mutation statistics including semantic mutation status.
 
+        Returns:
+            Dictionary with mutation statistics
+        """
         stats = self.mutation_stats.copy()
 
+        # Add semantic mutation configuration info
+        stats['semantic_mutation_disabled'] = self.semantic_mutation_disabled
+        stats['use_random_seed_prompts'] = self.use_random_seed_prompts
+        stats['force_disable_semantic_mutation'] = self.force_disable_semantic_mutation
+
+        # Calculate rates
+        total_mutations = stats['total_mutations']
         if total_mutations > 0:
-            stats['semantic_rate'] = self.mutation_stats['semantic_mutations'] / total_mutations
-            stats['random_rate'] = self.mutation_stats['random_mutations'] / total_mutations
+            stats['semantic_rate'] = stats['semantic_mutations'] / total_mutations
+            stats['random_rate'] = stats['random_mutations'] / total_mutations
         else:
             stats['semantic_rate'] = 0.0
             stats['random_rate'] = 0.0

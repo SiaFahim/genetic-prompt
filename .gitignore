@@ -55,3 +55,5 @@ data/cache/
 data/checkpoints/
 data/results/
 data/cache/llm_responses.json
+data/embeddings/
+data/

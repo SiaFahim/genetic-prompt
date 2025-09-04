@@ -93,7 +93,40 @@ class Config:
         api_config = self._config.get('api', {})
         if not (api_config.get('openai_key') or api_config.get('anthropic_key')):
             logger.warning("No API key found in configuration or environment variables")
-    
+
+        # Validate random seed configuration
+        self._validate_random_seed_config()
+
+    def _validate_random_seed_config(self) -> None:
+        """Validate random seed configuration parameters."""
+        ga_config = self._config.get('genetic_algorithm', {})
+
+        # Validate random_seed_length_range
+        length_range = ga_config.get('random_seed_length_range', [5, 20])
+        if not isinstance(length_range, list) or len(length_range) != 2:
+            raise ValueError("random_seed_length_range must be a list of two integers [min, max]")
+
+        min_len, max_len = length_range
+        if not isinstance(min_len, int) or not isinstance(max_len, int):
+            raise ValueError("random_seed_length_range values must be integers")
+
+        if min_len < 1 or max_len < min_len:
+            raise ValueError(f"Invalid random_seed_length_range: {length_range}. "
+                           f"Must have min >= 1 and max >= min")
+
+        # Validate random_seed_vocabulary_size
+        vocab_size = ga_config.get('random_seed_vocabulary_size', 1000)
+        if not isinstance(vocab_size, int) or vocab_size < 10:
+            raise ValueError(f"random_seed_vocabulary_size must be an integer >= 10, got: {vocab_size}")
+
+        # Log configuration if random seeds are enabled
+        if ga_config.get('use_random_seed_prompts', False):
+            logger.info(f"Random seed prompts enabled: vocab_size={vocab_size}, "
+                       f"length_range={length_range}")
+
+            if ga_config.get('force_disable_semantic_mutation', False):
+                logger.info("Semantic mutation manually disabled via force_disable_semantic_mutation")
+
     def get(self, key: str, default: Any = None) -> Any:
         """
         Get configuration value using dot notation.
