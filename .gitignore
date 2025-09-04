@@ -45,3 +45,12 @@ Thumbs.db
 
 # Cache
 .cache/
+
+# Large data files
+data/embeddings/glove.6B.100d.txt
+data/embeddings/glove_processed.pkl
+data/embeddings/neighborhoods.pkl
+data/gsm8k_raw/
+data/cache/
+data/checkpoints/
+data/results/
