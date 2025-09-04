@@ -54,3 +54,4 @@ data/gsm8k_raw/
 data/cache/
 data/checkpoints/
 data/results/
+data/cache/llm_responses.json
