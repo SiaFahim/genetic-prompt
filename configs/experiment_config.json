@@ -15,7 +15,7 @@
   "genetic_algorithm": {
     "population_size": 500,
     "num_parents": 50,
-    "max_generations": 30,
+    "max_generations": 20,
     "convergence_threshold": 0.85,
     "stagnation_generations": 5,
     "stagnation_improvement_threshold": 0.001
@@ -31,7 +31,7 @@
     "fallback_to_midpoint": true
   },
   "selection": {
-    "elite_count": 20,
+    "elite_count": 10,
     "diverse_count": 1,
     "random_count": 1
   },
@@ -45,16 +45,16 @@
     "cache_enabled": true,
     "progressive_evaluation": {
       "early_generations": {
-        "range": [1, 10],
-        "problems_per_genome": 10
-      },
-      "middle_generations": {
-        "range": [11, 20],
+        "range": [1, 20],
         "problems_per_genome": 20
       },
-      "late_generations": {
-        "range": [21, 30],
+      "middle_generations": {
+        "range": [11, 30],
         "problems_per_genome": 30
+      },
+      "late_generations": {
+        "range": [21, 50],
+        "problems_per_genome": 50
       }
     }
   },
